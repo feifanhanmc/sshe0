@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import sy.model.Tuser;
@@ -18,7 +17,7 @@ import sy.service.UserServiceI;
 import com.opensymphony.xwork2.ModelDriven;
 
 		
-@ParentPackage("basePackage")
+
 @Namespace("/")
 @Action("userAction")
 public class UserAction extends BaseAction implements ModelDriven<User>
