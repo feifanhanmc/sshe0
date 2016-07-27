@@ -76,7 +76,7 @@ public class Tuser implements java.io.Serializable
 		this.name = name;
 	}
 
-	@Column(name = "PWD", length = 20)
+	@Column(name = "PWD", length = 32)
 	public String getPwd()
 	{
 		return this.pwd;

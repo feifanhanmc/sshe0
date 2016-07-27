@@ -1,16 +1,11 @@
 package sy.action;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import sy.model.Tuser;
+import sy.pageModel.Json;
 import sy.pageModel.User;
 import sy.service.UserServiceI;
 
@@ -45,39 +40,38 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		this.userService = userService;
 	}
 
-	public void test()
-	{
-		logger.info("进入userAction");
-		userService.test();
-	}
-	
-	public void addUser()
-	{	
-		Tuser t = new Tuser();
-		t.setId(UUID.randomUUID().toString());
-		t.setName("FromUserAction1");
-		t.setCreatedatetime(new Date());
-		userService.save(t);
-	}
-	
+
 	public void reg()
 	{
-
-		Map<String, Object> m = new HashMap<String, Object>();
+		Json j = new Json();
 		try
 		{
-			userService.add(user.getName(),user.getPwd());
-			m.put("success", true);
-			m.put("msg", "注册成功");
+			userService.save(user);
+			j.setSuccess(true);
+			j.setMsg("注册成功!");
 		} catch (Exception e)
 		{
-			e.printStackTrace();
-			m.put("success", true);
-			m.put("msg", e.getMessage());
+			j.setMsg(e.getMessage());
 		}
 		
-		super.writeJson(m);
+		super.writeJson(j);
 	}
 
+	public void login()
+	{
+		User u = userService.login(user);
+		Json j = new Json();
+		if(u != null)
+		{
+			j.setSuccess(true);
+			j.setMsg("注册成功！");
+		}
+		else
+		{
+			j.setMsg("登录失败，用户名或密码错误！");
+		}
+		
+		super.writeJson(j);
+	}
 
 }
