@@ -24,7 +24,11 @@ public class Tmenu  implements java.io.Serializable {
 
     // Fields    
 
-     private String id;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String id;
      private Tmenu tmenu;
      private String text;
      private String iconcls;

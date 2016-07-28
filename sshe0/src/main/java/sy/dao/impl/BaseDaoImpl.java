@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import sy.dao.BaseDaoI;
-import sy.service.impl.UserServiceImpl;
+
+
 
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDaoI<T>
