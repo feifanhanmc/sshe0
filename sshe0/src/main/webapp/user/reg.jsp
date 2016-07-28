@@ -1,16 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-
-    
-    <title>reg</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
 <script type="text/javascript">
 	$(function() {
 		$('#user_reg_regForm').form({
@@ -33,10 +21,7 @@
 		});
 	});
 </script>
-
-  </head>
-  
-  <body>
+<body>
 	<div id="user_reg_regDialog" style="width: 250px;" class="easyui-dialog" data-options="title:'注册',closed:true,modal:true,buttons:[{
 				text:'注册',
 				iconCls:'icon-edit',
@@ -61,5 +46,4 @@
 		</table>
 	</form>
 	</div>
-  </body>
-</html>
+</body>
