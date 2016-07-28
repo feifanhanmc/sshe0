@@ -1,5 +1,7 @@
 package sy.pageModel;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 public class Menu
@@ -10,15 +12,26 @@ public class Menu
 	private String state;
 	private String pid;
 	private String ptext;
-	
+
 	private String id;
     private String text;
     private String iconcls;
-    private String url;
+
+    private Map<String, Object> attributes;
     
     
     
-    public String getState()
+    public Map<String, Object> getAttributes()
+	{
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Object> attributes)
+	{
+		this.attributes = attributes;
+	}
+
+	public String getState()
 	{
 		return state;
 	}
@@ -79,19 +92,7 @@ public class Menu
 	{
 		this.iconcls = iconcls;
 	}
-	
-	public String getUrl()
-	{
-		return url;
-	}
-	
-	public void setUrl(String url)
-	{
-		this.url = url;
-	}
-    
-    
-    
+	    
 	
     
 }

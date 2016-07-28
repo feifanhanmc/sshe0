@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<body>
 <script type="text/javascript">
 	$(function() {
 		$('#user_login_loginForm').form({
@@ -25,7 +26,6 @@
 		}, 0);
 	});
 </script>
-<body>
     <div id="user_login_loginDialog" class="easyui-dialog" data-options="title:'登录',modal:true,closable:false,buttons:[{
 				text:'注册',
 				iconCls:'icon-edit',

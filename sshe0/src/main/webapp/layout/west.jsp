@@ -6,7 +6,14 @@
 					url : '${pageContext.request.contextPath}/menuAction!getTreeNode.action'
 					,lines : true
 					,onClick : function(node) {
-						addTab({title : node.text});
+						if (node.attributes.url) {
+							var url = '${pageContext.request.contextPath}' + node.attributes.url;
+							addTab({
+								title : node.text,
+								closable : true,
+								href : url
+							});
+						}
 					}"></ul>
 		</div>
 		<div title="Title2" data-options="iconCls:'icon-search'"></div>

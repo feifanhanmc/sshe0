@@ -56,6 +56,11 @@ public class MenuServiceImpl implements MenuServiceI
 			{
 				Menu m = new Menu();
 				BeanUtils.copyProperties(t, m);
+				
+				Map<String, Object> attributes = new HashMap<String, Object>();
+				attributes.put("url", t.getUrl());
+				m.setAttributes(attributes);
+				
 				Set<Tmenu> set = t.getTmenus();
 				if(set != null && !set.isEmpty())
 				{
@@ -83,6 +88,11 @@ public class MenuServiceImpl implements MenuServiceI
 			{
 				Menu m = new Menu();
 				BeanUtils.copyProperties(t, m);
+				
+				Map<String, Object> attributes = new HashMap<String, Object>();
+				attributes.put("url", t.getUrl());
+				m.setAttributes(attributes);
+				
 				Tmenu tm = t.getTmenu();
 				if( tm != null)
 				{

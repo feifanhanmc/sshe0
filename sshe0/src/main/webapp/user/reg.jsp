@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<body>
 <script type="text/javascript">
 	$(function() {
 		$('#user_reg_regForm').form({
@@ -21,7 +22,6 @@
 		});
 	});
 </script>
-<body>
 	<div id="user_reg_regDialog" style="width: 250px;" class="easyui-dialog" data-options="title:'注册',closed:true,modal:true,buttons:[{
 				text:'注册',
 				iconCls:'icon-edit',
