@@ -50,7 +50,8 @@ public class UserServiceImpl implements UserServiceI
 	@Override
 	public User login(User user)
 	{
-		Tuser t = userDao.get("from Tuser t where t.name='" + user.getName() + "' and t.pwd = '" + Encrypt.e(user.getPwd()) + "'" );
+		//Tuser t = userDao.get("from Tuser t where t.name='" + user.getName() + "' and t.pwd = '" + Encrypt.e(user.getPwd()) + "'" );
+		Tuser t = userDao.get("from Tuser t where t.name = ? and t.pwd = ? ", new Object[]{ user.getName() , Encrypt.e(user.getPwd()) } );
 		if(t != null)
 			return user;
 		return null;
