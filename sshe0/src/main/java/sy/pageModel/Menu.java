@@ -1,8 +1,13 @@
 package sy.pageModel;
 
+import org.apache.log4j.Logger;
+
 public class Menu
 {
+	
+	private static final Logger logger = Logger.getLogger(Menu.class);
 
+	private String state;
 	private String pid;
 	private String ptext;
 	
@@ -13,7 +18,17 @@ public class Menu
     
     
     
-    public String getPid()
+    public String getState()
+	{
+		return state;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+
+	public String getPid()
 	{
 		return pid;
 	}
@@ -37,6 +52,7 @@ public class Menu
     
 	public String getId()
 	{
+		logger.info("id:" + id);
 		return id;
 	}
 	

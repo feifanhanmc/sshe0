@@ -1,8 +1,10 @@
 package sy.service;
 
+import java.util.List;
+
 import sy.pageModel.Menu;
 
 public interface MenuServiceI
 {
-	public void save(Menu menu);
+	public List<Menu> getTree(String id);
 }

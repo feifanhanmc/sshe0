@@ -1,15 +1,26 @@
 package sy.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sy.dao.MenuDaoI;
+import sy.model.Tmenu;
 import sy.pageModel.Menu;
 import sy.service.MenuServiceI;
 
 @Service("menuService")
 public class MenuServiceImpl implements MenuServiceI
 {
+	private static final Logger logger = Logger.getLogger(MenuServiceImpl.class);
+	
 	private MenuDaoI menuDao;
 
 	public MenuDaoI getMenuDao()
@@ -24,10 +35,44 @@ public class MenuServiceImpl implements MenuServiceI
 	}
 
 	@Override
-	public void save(Menu menu)
+	public List<Menu> getTree(String id)
 	{
-		// TODO Auto-generated method stub
-		
+		List<Menu> nl = new ArrayList<Menu>();
+		String hql = null;
+		Map<String, Object> params = new HashMap<String, Object>();
+		logger.info("id:" + id);
+		if( id == null || id.equals("") )
+		{
+			hql = "from Tmenu t where t.tmenu is null";
+			logger.info("1:" + hql);
+		}
+		else
+		{
+			hql = "from Tmenu t where t.tmenu.id = :id ";
+			params.put("id", id);
+			logger.info("2:" + hql);
+		}
+		logger.info("0:" + hql);
+		List<Tmenu> l = menuDao.find(hql, params);
+		if( l != null && l.size() > 0)
+		{
+			for(Tmenu t : l)
+			{
+				Menu m = new Menu();
+				BeanUtils.copyProperties(t, m);
+				Set<Tmenu> set = t.getTmenus();
+				if(set != null && !set.isEmpty())
+				{
+					m.setState("closed");//节点以文件夹的形式体现
+				}
+				else
+				{
+					m.setState("open");//节点以文件的形式体现
+				}
+				nl.add(m);
+			}
+		}
+		return nl;
 	}
 	
 	

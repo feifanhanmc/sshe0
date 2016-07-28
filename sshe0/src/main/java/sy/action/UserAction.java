@@ -64,7 +64,7 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		if(u != null)
 		{
 			j.setSuccess(true);
-			j.setMsg("注册成功！");
+			j.setMsg("登陆成功！");
 		}
 		else
 		{
