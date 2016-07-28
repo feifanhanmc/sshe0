@@ -35,7 +35,7 @@ public class MenuServiceImpl implements MenuServiceI
 	}
 
 	@Override
-	public List<Menu> getTree(String id)
+	public List<Menu> getTreeNode(String id)
 	{
 		List<Menu> nl = new ArrayList<Menu>();
 		String hql = null;
@@ -49,7 +49,6 @@ public class MenuServiceImpl implements MenuServiceI
 			hql = "from Tmenu t where t.tmenu.id = :id ";
 			params.put("id", id);
 		}
-		logger.info("0:" + hql);
 		List<Tmenu> l = menuDao.find(hql, params);
 		if( l != null && l.size() > 0)
 		{
@@ -65,6 +64,29 @@ public class MenuServiceImpl implements MenuServiceI
 				else
 				{
 					m.setState("open");//节点以文件的形式体现
+				}
+				nl.add(m);
+			}
+		}
+		return nl;
+	}
+
+	@Override
+	public List<Menu> getAllTreeNode()
+	{
+		List<Menu> nl = new ArrayList<Menu>();
+		String hql = "from Tmenu t";
+		List<Tmenu> l = menuDao.find(hql);
+		if( l != null && l.size() > 0)
+		{
+			for(Tmenu t : l)
+			{
+				Menu m = new Menu();
+				BeanUtils.copyProperties(t, m);
+				Tmenu tm = t.getTmenu();
+				if( tm != null)
+				{
+					m.setPid(tm.getId());
 				}
 				nl.add(m);
 			}

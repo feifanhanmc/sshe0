@@ -6,5 +6,7 @@ import sy.pageModel.Menu;
 
 public interface MenuServiceI
 {
-	public List<Menu> getTree(String id);
+	public List<Menu> getTreeNode(String id);
+	
+	public List<Menu> getAllTreeNode();
 }
