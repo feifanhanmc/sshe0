@@ -25,7 +25,7 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		return user;
 	}
 	
-	private static final Logger logger = Logger.getLogger("UserAction.class");
+	private static final Logger logger = Logger.getLogger(UserAction.class);
 	
 	private UserServiceI userService;
 	

@@ -2,17 +2,23 @@ package sy.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import sy.dao.BaseDaoI;
+import sy.service.impl.UserServiceImpl;
 
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDaoI<T>
 {
+	
+	private static final Logger logger = Logger.getLogger(BaseDaoImpl.class);
+	
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory()
@@ -51,6 +57,23 @@ public class BaseDaoImpl<T> implements BaseDaoI<T>
 			for(int i = 0 ; i < params.length ; i++)
 			{
 				q.setParameter(i, params[i]);
+			}
+		}
+		List<T> l = q.list();
+		if(l != null && l.size() > 0)
+			return l.get(0);
+		return null;
+	}
+
+	@Override
+	public T get(String hql, Map<String, Object> params)
+	{
+		Query q = this.sessionFactory.getCurrentSession().createQuery(hql);
+		if(params != null && !params.isEmpty())
+		{
+			for(String key : params.keySet())
+			{
+				q.setParameter(key, params.get(key));
 			}
 		}
 		List<T> l = q.list();

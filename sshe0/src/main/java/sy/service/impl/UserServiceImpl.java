@@ -3,6 +3,8 @@ package sy.service.impl;
 //import java.util.logging.Logger;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
@@ -51,7 +53,11 @@ public class UserServiceImpl implements UserServiceI
 	public User login(User user)
 	{
 		//Tuser t = userDao.get("from Tuser t where t.name='" + user.getName() + "' and t.pwd = '" + Encrypt.e(user.getPwd()) + "'" );
-		Tuser t = userDao.get("from Tuser t where t.name = ? and t.pwd = ? ", new Object[]{ user.getName() , Encrypt.e(user.getPwd()) } );
+		//Tuser t = userDao.get("from Tuser t where t.name = ? and t.pwd = ? ", new Object[]{ user.getName() , Encrypt.e(user.getPwd()) } );
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name",user.getName());
+		params.put("pwd", Encrypt.e(user.getPwd()));
+		Tuser t = userDao.get("from Tuser t where t.name = :name and t.pwd = :pwd ",params);
 		if(t != null)
 			return user;
 		return null;
