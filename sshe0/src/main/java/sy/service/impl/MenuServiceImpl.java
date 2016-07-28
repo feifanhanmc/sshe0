@@ -40,17 +40,14 @@ public class MenuServiceImpl implements MenuServiceI
 		List<Menu> nl = new ArrayList<Menu>();
 		String hql = null;
 		Map<String, Object> params = new HashMap<String, Object>();
-		logger.info("id:" + id);
 		if( id == null || id.equals("") )
 		{
 			hql = "from Tmenu t where t.tmenu is null";
-			logger.info("1:" + hql);
 		}
 		else
 		{
 			hql = "from Tmenu t where t.tmenu.id = :id ";
 			params.put("id", id);
-			logger.info("2:" + hql);
 		}
 		logger.info("0:" + hql);
 		List<Tmenu> l = menuDao.find(hql, params);

@@ -52,7 +52,6 @@ public class Menu
     
 	public String getId()
 	{
-		logger.info("id:" + id);
 		return id;
 	}
 	
