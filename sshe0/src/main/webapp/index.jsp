@@ -23,12 +23,12 @@
     <div data-options="region:'west'" style="width:180px;">
 		<jsp:include page="layout/west.jsp"></jsp:include>
 	</div>
-   <div data-options="region:'center',title:'欢迎使用示例系统',border:false" style="overflow: hidden;">
+    <div data-options="region:'center',title:'欢迎使用示例系统',border:false" style="overflow: hidden;">
 		<jsp:include page="layout/center.jsp"></jsp:include>
 	</div>
+	
 	<jsp:include page="user/login.jsp"></jsp:include>
 	<jsp:include page="user/reg.jsp"></jsp:include>
-
 	
 </body>
 </html>

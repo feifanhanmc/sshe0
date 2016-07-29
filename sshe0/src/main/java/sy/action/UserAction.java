@@ -5,6 +5,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sy.pageModel.DataGrid;
 import sy.pageModel.Json;
 import sy.pageModel.User;
 import sy.service.UserServiceI;
@@ -74,4 +75,9 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		super.writeJson(j);
 	}
 
+	public void datagrid()
+	{
+		super.writeJson(userService.datagrid());
+		logger.info("here");
+	}
 }
