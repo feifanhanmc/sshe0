@@ -67,12 +67,13 @@ public class UserServiceImpl implements UserServiceI
 	}
 
 	@Override
-	public DataGrid datagrid()
+	public DataGrid datagrid(User user)
 	{
 		DataGrid dg = new DataGrid();
 		String hql = "from Tuser t";
 		String totalHql = "select count(*) " + hql;
-		List<Tuser> l = userDao.find(hql);
+		hql += " order by " + user.getSort() + " " + user.getOrder();
+		List<Tuser> l = userDao.find(hql, user.getPage(), user.getRows());
 		List<User> nl = new ArrayList<User>();
 		if( l != null && l.size() > 0)
 		{

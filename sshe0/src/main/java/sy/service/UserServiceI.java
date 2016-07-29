@@ -9,5 +9,5 @@ public interface UserServiceI
 	
 	public User login(User user);
 
-	public DataGrid datagrid();
+	public DataGrid datagrid(User user);
 }

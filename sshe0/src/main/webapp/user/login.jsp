@@ -35,7 +35,7 @@
 				}
 			},{
 				text:'登录',
-				iconCls:'icon-help',
+				iconCls:'icon-ok',
 				handler:function(){
 					$('#user_login_loginForm').submit();
 				}

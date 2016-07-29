@@ -77,7 +77,6 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 
 	public void datagrid()
 	{
-		super.writeJson(userService.datagrid());
-		logger.info("here");
+		super.writeJson(userService.datagrid(user));
 	}
 }
