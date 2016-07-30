@@ -87,7 +87,7 @@ public class Tuser implements java.io.Serializable
 		this.pwd = pwd;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATETIME", length = 7)
 	public Date getCreatedatetime()
 	{
@@ -99,7 +99,7 @@ public class Tuser implements java.io.Serializable
 		this.createdatetime = createdatetime;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFYDATETIME", length = 7)
 	public Date getModifydatetime()
 	{
