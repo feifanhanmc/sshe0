@@ -63,9 +63,10 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		Json j = new Json();
 		try
 		{
-			userService.save(user);
+			User u = userService.save(user);
 			j.setSuccess(true);
 			j.setMsg("添加成功!");
+			j.setObj(u);
 		} catch (Exception e)
 		{
 			j.setMsg(e.getMessage());
@@ -95,5 +96,26 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 	public void datagrid()
 	{
 		super.writeJson(userService.datagrid(user));
+	}
+	
+	public void remove()
+	{
+		userService.remove(user.getIds());
+		Json j = new Json();
+		j.setSuccess(true);
+		j.setMsg("删除成功！");
+		
+		super.writeJson(j);
+	}
+	
+	public void edit()
+	{
+		User u = userService.edit(user);
+		Json j = new Json();
+		j.setSuccess(true);
+		j.setMsg("修改成功！");
+		j.setObj(u);
+		
+		super.writeJson(j);
 	}
 }

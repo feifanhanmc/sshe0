@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserServiceI
 
 	
 	@Override
-	public void save(User user)
+	public User save(User user)
 	{
 		Tuser t = new Tuser();
 		BeanUtils.copyProperties(user, t, new String[]{"pwd"});
@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserServiceI
 		t.setId(UUID.randomUUID().toString());
 		t.setCreatedatetime(new Date());
 		userDao.save(t);
+		BeanUtils.copyProperties(t, user);
+		return user;
 	}
 
 	@Override
@@ -113,5 +115,44 @@ public class UserServiceImpl implements UserServiceI
 			params.put("name", "%%" + user.getName().trim() + "%%");
 		}
 		return hql;
+	}
+
+	@Override
+	public void remove(String ids)
+	{
+		/*
+		 * 先通过id查询出来，然后再删除
+		 * 效率低
+		 * 不如直接执行hql语句进行删除
+		for(String id : ids.split(","))
+		{
+			Tuser u = userDao.get(Tuser.class, id);
+			if(u != null)
+			{
+				userDao.delete(u);
+			}
+		}
+		*/
+		
+		String [] nids = ids.split(",");
+		String hql = "delete Tuser t where t.id in (";
+		for(int i = 0; i < nids.length; i++)
+		{
+			if( i > 0)
+			{
+				hql += ",";				
+			}
+			hql += " ' " + nids[i] + " ' ";
+		}
+		hql += " ) ";
+		userDao.executeHql(hql);
+	}
+
+	@Override
+	public User edit(User user)
+	{
+		Tuser t = userDao.get(Tuser.class, user.getId());
+		BeanUtils.copyProperties(user, t, new String[]{"id", "pwd"});
+		return user;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.SharedSessionContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -102,6 +103,12 @@ public class BaseDaoImpl<T> implements BaseDaoI<T>
 	}
 
 	@Override
+	public T get(Class<T> c, Serializable id)
+	{
+		return (T) this.sessionFactory.getCurrentSession().get(c, id);
+	}
+
+	@Override
 	public List<T> find(String hql)
 	{
 		Query q = this.sessionFactory.getCurrentSession().createQuery(hql);
@@ -164,5 +171,11 @@ public class BaseDaoImpl<T> implements BaseDaoI<T>
 		return (Long) q.uniqueResult();
 	}
 
+	@Override
+	public int executeHql(String hql)
+	{
+		Query q = this.sessionFactory.getCurrentSession().createQuery(hql);
+		return q.executeUpdate();
+	}
 
 }

@@ -20,8 +20,18 @@ public class User implements java.io.Serializable
 	private String sort;
 	private String order;
 	
+	private String ids;
 	
 	
+	
+	public String getIds()
+	{
+		return ids;
+	}
+	public void setIds(String ids)
+	{
+		this.ids = ids;
+	}
 	public String getSort()
 	{
 		return sort;

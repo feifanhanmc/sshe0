@@ -26,6 +26,12 @@ public interface BaseDaoI<T>
 	 */
 	public void saveOrUpdate(T o);
 	
+	
+	/*
+	 * 通过id查询
+	 */
+	public T get(Class<T> c, Serializable id);
+	
 	/*
 	 * 普通查询（返回一个对象）
 	 */
@@ -51,4 +57,8 @@ public interface BaseDaoI<T>
 	public Long count(String hql);
 	public Long count(String hql, Map<String ,Object> params);
 	
+	/*
+	 * 直接执行一条hql语句
+	 */
+	public int executeHql(String hql);
 }
