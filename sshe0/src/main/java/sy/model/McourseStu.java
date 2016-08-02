@@ -2,10 +2,16 @@ package sy.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * McourseStu entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "MCOURSESTU", schema = "SSHE")
 public class McourseStu implements java.io.Serializable
 {
 
@@ -39,7 +45,8 @@ public class McourseStu implements java.io.Serializable
 	}
 
 	// Property accessors
-
+	@Id
+	@Column(name = "CID", unique = true, nullable = false, length = 36)
 	public String getCid()
 	{
 		return this.cid;

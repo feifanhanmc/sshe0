@@ -1,9 +1,15 @@
 package sy.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Mcourse entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "MCOURSE", schema = "SSHE")
 public class Mcourse implements java.io.Serializable
 {
 
@@ -12,8 +18,8 @@ public class Mcourse implements java.io.Serializable
 	private String cid;
 	private String cname;
 	private String tid;
-	private String avg;
-
+	private float avg;
+	private String tname;
 	// Constructors
 
 	/** default constructor */
@@ -28,7 +34,7 @@ public class Mcourse implements java.io.Serializable
 	}
 
 	/** full constructor */
-	public Mcourse(String cid, String cname, String tid, String avg)
+	public Mcourse(String cid, String cname, String tid, float avg)
 	{
 		this.cid = cid;
 		this.cname = cname;
@@ -37,7 +43,8 @@ public class Mcourse implements java.io.Serializable
 	}
 
 	// Property accessors
-
+	@Id
+	@Column(name = "CID", unique = true, nullable = false, length = 36)
 	public String getCid()
 	{
 		return this.cid;
@@ -68,14 +75,25 @@ public class Mcourse implements java.io.Serializable
 		this.tid = tid;
 	}
 
-	public String getAvg()
+	public float getAvg()
 	{
 		return this.avg;
 	}
 
-	public void setAvg(String avg)
+	public void setAvg(float avg)
 	{
 		this.avg = avg;
 	}
 
+	public String getTname()
+	{
+		return tname;
+	}
+
+	public void setTname(String tname)
+	{
+		this.tname = tname;
+	}
+
+	
 }

@@ -81,9 +81,6 @@ public class UserServiceImpl implements UserServiceI
 		changeModel(l, nl);
 		dg.setTotal(userDao.count(totalHql, params));
 		dg.setRows(nl);
-		logger.info( "l : " + l);
-		logger.info( "nl : " + nl);
-		logger.info("dg : " + dg);
 		return dg;
 	}
 
@@ -113,8 +110,8 @@ public class UserServiceImpl implements UserServiceI
 	{
 		if (user.getName() != null && !user.getName().trim().equals("")) 
 		{
-			hql += " where m.account like :account";
-			params.put("account", "%%" + user.getAccount().trim() + "%%");
+			hql += " where m.name like :name";
+			params.put("name", "%%" + user.getName().trim() + "%%");
 		}
 		return hql;
 	}

@@ -22,60 +22,44 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sy.model.Mcourse;
 import sy.model.Muser;
+import sy.pageModel.Course;
 import sy.pageModel.Json;
 import sy.pageModel.User;
-import sy.service.UserServiceI;
+import sy.service.CourseServiceI;
 
 import com.opensymphony.xwork2.ModelDriven;
 
-		
 
 @Namespace("/")
-@Action("userAction")
-public class UserAction extends BaseAction implements ModelDriven<User>
+@Action("courseAction")
+public class CourseAction extends BaseAction implements ModelDriven<Course>
 {
-	User user = new User();
+	Course course = new Course();
 	
 	@Override
-	public User getModel()
+	public Course getModel()
 	{
-		return user;
+		return course;
 	}
-	
 	
 	public static final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
 	
 	private static final Logger logger = Logger.getLogger(UserAction.class);
 	
-	private UserServiceI userService;
+	private CourseServiceI courseService;
 	
-	public UserServiceI getUserService()
+	
+	public CourseServiceI getCourseService()
 	{
-		return userService;
+		return courseService;
 	}
 
 	@Autowired
-	public void setUserService(UserServiceI userService)
+	public void setCourseService(CourseServiceI courseService)
 	{
-		this.userService = userService;
-	}
-		
-	
-	public void reg()
-	{
-		Json j = new Json();
-		try
-		{
-			userService.save(user);
-			j.setSuccess(true);
-			j.setMsg("注册成功!");
-		} catch (Exception e)
-		{
-			j.setMsg(e.getMessage());
-		}
-		
-		super.writeJson(j);
+		this.courseService = courseService;
 	}
 
 	public void add()
@@ -83,10 +67,10 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		Json j = new Json();
 		try
 		{
-			User u = userService.save(user);
+			Course c = courseService.save(course);
 			j.setSuccess(true);
 			j.setMsg("添加成功!");
-			j.setObj(u);
+			j.setObj(c);
 		} catch (Exception e)
 		{
 			j.setMsg(e.getMessage());
@@ -95,63 +79,23 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 		super.writeJson(j);
 	}
 	
-	public void login()
-	{
-		User u = userService.login(user);
-		logger.info(user);
-		Json j = new Json();
-		if(u != null)
-		{
-			j.setSuccess(true);
-			j.setMsg("登陆成功！");
-		}
-		else
-		{
-			j.setMsg("登录失败，用户名或密码错误！");
-		}
-		
-		super.writeJson(j);
-	}
 
-	
 	public void datagrid()
 	{
-		super.writeJson(userService.datagrid(user));
-	}
-	
-	public void remove()
-	{
-		userService.remove(user.getIds());
-		Json j = new Json();
-		j.setSuccess(true);
-		j.setMsg("删除成功！");
-		
-		super.writeJson(j);
-	}
-	
-	public void edit()
-	{
-		User u = userService.edit(user);
-		Json j = new Json();
-		j.setSuccess(true);
-		j.setMsg("修改成功！");
-		j.setObj(u);
-		
-		super.writeJson(j);
+		super.writeJson(courseService.datagrid(course));
 	}
 	
 	public void exportExcel()
 	{	
-		logger.info("hello");
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		String docsPath = "D:";
-		String fileName = "UserInfo" + System.currentTimeMillis() + ".xlsx";	
+		String fileName = "CourseInfo" + System.currentTimeMillis() + ".xlsx";	
 		String filePath = docsPath + FILE_SEPARATOR + fileName;
 
-		List<Muser> l = userService.exportExcel();
-		String[] str = {"ID","Account","Name","Role","Modify Time"};
+		List<Mcourse> l = courseService.exportExcel();
+		String[] str = {"课程名称","课程教师","平均分"};
 		try 
 		{
 			OutputStream os = new FileOutputStream(filePath);
@@ -164,14 +108,12 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 			
 			for (int i = 0; i < l.size(); i++) 
 			{	
-				Muser m = (Muser) l.get(i);
+				Mcourse m = (Mcourse) l.get(i);
 				XSSFRow row = sheet.createRow(i+1);
 
-				row.createCell(0).setCellValue(m.getId());
-				row.createCell(1).setCellValue(m.getAccount());
-				row.createCell(2).setCellValue(m.getName());
-				row.createCell(3).setCellValue(m.getRole());
-				row.createCell(4).setCellValue(m.getModifytime().toString());
+				row.createCell(0).setCellValue(m.getCname());
+				row.createCell(1).setCellValue(m.getTname());
+				row.createCell(2).setCellValue(m.getAvg());
 
 			}
 
