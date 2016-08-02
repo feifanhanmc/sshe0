@@ -175,6 +175,7 @@ public class BaseDaoImpl<T> implements BaseDaoI<T>
 	public int executeHql(String hql)
 	{
 		Query q = this.sessionFactory.getCurrentSession().createQuery(hql);
+		logger.info("q:" + q);
 		return q.executeUpdate();
 	}
 

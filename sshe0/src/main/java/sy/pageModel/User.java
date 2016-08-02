@@ -9,10 +9,11 @@ public class User implements java.io.Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
+	private String account;
 	private String name;
 	private String pwd;
-	private Date createdatetime;
-	private Date modifydatetime;
+	private String role;
+	private Date modifytime;
 	
 	private int page;
 	private int rows;
@@ -21,9 +22,24 @@ public class User implements java.io.Serializable
 	private String order;
 	
 	private String ids;
-	
-	
-	
+		
+
+	public String getRole()
+	{
+		return role;
+	}
+	public void setRole(String role)
+	{
+		this.role = role;
+	}
+	public String getAccount()
+	{
+		return account;
+	}
+	public void setAccount(String account)
+	{
+		this.account = account;
+	}
 	public String getIds()
 	{
 		return ids;
@@ -88,21 +104,13 @@ public class User implements java.io.Serializable
 	{
 		this.pwd = pwd;
 	}
-	public Date getCreatedatetime()
+	public Date getModifytime()
 	{
-		return createdatetime;
+		return modifytime;
 	}
-	public void setCreatedatetime(Date createdatetime)
+	public void setModifytime(Date modifytime)
 	{
-		this.createdatetime = createdatetime;
-	}
-	public Date getModifydatetime()
-	{
-		return modifydatetime;
-	}
-	public void setModifydatetime(Date modifydatetime)
-	{
-		this.modifydatetime = modifydatetime;
+		this.modifytime = modifytime;
 	}
 	
 }

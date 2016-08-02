@@ -33,7 +33,7 @@
 		<table>
 			<tr>
 				<th>登录名</th>
-				<td><input name="name" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'" /></td>
+				<td><input name="account" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'" /></td>
 			</tr>
 			<tr>
 				<th>密码</th>

@@ -27,13 +27,6 @@
 	});
 </script>
     <div id="user_login_loginDialog" class="easyui-dialog" data-options="title:'登录',modal:true,closable:false,buttons:[{
-				text:'注册',
-				iconCls:'icon-edit',
-				handler:function(){
-					$('#user_reg_regForm').form('load',{name:'',pwd:'',rePwd:''});
-					$('#user_reg_regDialog').dialog('open');
-				}
-			},{
 				text:'登录',
 				iconCls:'icon-ok',
 				handler:function(){
@@ -44,7 +37,7 @@
 		<table>
 			<tr>
 				<th>登录名</th>
-				<td><input name="name" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'" />
+				<td><input name="account" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'" />
 				</td>
 			</tr>
 			<tr>

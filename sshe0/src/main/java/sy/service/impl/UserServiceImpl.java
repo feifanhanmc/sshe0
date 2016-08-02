@@ -15,11 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sy.dao.UserDaoI;
-import sy.model.Tuser;
+import sy.model.Muser;
 import sy.pageModel.DataGrid;
 import sy.pageModel.User;
 import sy.service.UserServiceI;
 import sy.util.Encrypt;
+
 
 @Service("userService")
 public class UserServiceImpl implements UserServiceI
@@ -44,26 +45,24 @@ public class UserServiceImpl implements UserServiceI
 	@Override
 	public User save(User user)
 	{
-		Tuser t = new Tuser();
-		BeanUtils.copyProperties(user, t, new String[]{"pwd"});
-		t.setPwd(Encrypt.e(user.getPwd()));//加密处理
-		t.setId(UUID.randomUUID().toString());
-		t.setCreatedatetime(new Date());
-		userDao.save(t);
-		BeanUtils.copyProperties(t, user);
+		Muser m = new Muser();
+		BeanUtils.copyProperties(user, m, new String[]{"pwd"});
+		m.setPwd(Encrypt.e(user.getPwd()));//加密处理
+		m.setId(UUID.randomUUID().toString());
+		m.setModifytime(new Date());
+		userDao.save(m);
+		BeanUtils.copyProperties(m, user);
 		return user;
 	}
 
 	@Override
 	public User login(User user)
 	{
-		//Tuser t = userDao.get("from Tuser t where t.name='" + user.getName() + "' and t.pwd = '" + Encrypt.e(user.getPwd()) + "'" );
-		//Tuser t = userDao.get("from Tuser t where t.name = ? and t.pwd = ? ", new Object[]{ user.getName() , Encrypt.e(user.getPwd()) } );
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name",user.getName());
+		params.put("account",user.getAccount());
 		params.put("pwd", Encrypt.e(user.getPwd()));
-		Tuser t = userDao.get("from Tuser t where t.name = :name and t.pwd = :pwd ",params);
-		if(t != null)
+		Muser m = userDao.get("from Muser m where m.account = :account and m.pwd = :pwd ",params);
+		if(m != null)
 			return user;
 		return null;
 	}
@@ -72,27 +71,30 @@ public class UserServiceImpl implements UserServiceI
 	public DataGrid datagrid(User user)
 	{
 		DataGrid dg = new DataGrid();
-		String hql = "from Tuser t";
+		String hql = "from Muser m";
 		Map<String, Object> params = new HashMap<String, Object>();
 		hql = addWhere(user, hql, params);		
 		String totalHql = "select count(*) " + hql;
 		hql = addOrder(user, hql);
-		List<Tuser> l = userDao.find(hql, params, user.getPage(), user.getRows());
+		List<Muser> l = userDao.find(hql, params, user.getPage(), user.getRows());
 		List<User> nl = new ArrayList<User>();
 		changeModel(l, nl);
 		dg.setTotal(userDao.count(totalHql, params));
 		dg.setRows(nl);
+		logger.info( "l : " + l);
+		logger.info( "nl : " + nl);
+		logger.info("dg : " + dg);
 		return dg;
 	}
 
-	private void changeModel(List<Tuser> l, List<User> nl) 
+	private void changeModel(List<Muser> l, List<User> nl) 
 	{
 		if (l != null && l.size() > 0) 
 		{
-			for (Tuser t : l) 
+			for (Muser m : l) 
 			{
 				User u = new User();
-				BeanUtils.copyProperties(t, u);
+				BeanUtils.copyProperties(m, u);
 				nl.add(u);
 			}
 		}
@@ -111,8 +113,8 @@ public class UserServiceImpl implements UserServiceI
 	{
 		if (user.getName() != null && !user.getName().trim().equals("")) 
 		{
-			hql += " where t.name like :name";
-			params.put("name", "%%" + user.getName().trim() + "%%");
+			hql += " where m.account like :account";
+			params.put("account", "%%" + user.getAccount().trim() + "%%");
 		}
 		return hql;
 	}
@@ -124,9 +126,11 @@ public class UserServiceImpl implements UserServiceI
 		 * 先通过id查询出来，然后再删除
 		 * 效率低
 		 * 不如直接执行hql语句进行删除
+		 * 
+		 * 
 		for(String id : ids.split(","))
 		{
-			Tuser u = userDao.get(Tuser.class, id);
+			Muser u = userDao.get(Muser.class, id);
 			if(u != null)
 			{
 				userDao.delete(u);
@@ -135,24 +139,35 @@ public class UserServiceImpl implements UserServiceI
 		*/
 		
 		String [] nids = ids.split(",");
-		String hql = "delete Tuser t where t.id in (";
+		String hql = "delete Muser muser where muser.id in (";
 		for(int i = 0; i < nids.length; i++)
 		{
 			if( i > 0)
 			{
 				hql += ",";				
 			}
-			hql += " ' " + nids[i] + " ' ";
+			hql += "'" + nids[i] + "'";
 		}
 		hql += " ) ";
 		userDao.executeHql(hql);
+		
 	}
 
 	@Override
 	public User edit(User user)
 	{
-		Tuser t = userDao.get(Tuser.class, user.getId());
-		BeanUtils.copyProperties(user, t, new String[]{"id", "pwd"});
+		Muser m = userDao.get(Muser.class, user.getId());
+		BeanUtils.copyProperties(user, m, new String[]{"id", "pwd"});
+		m.setPwd(Encrypt.e(user.getPwd()));
+		m.setModifytime(new Date());
 		return user;
 	}
+
+	@Override
+	public List exportExcel()
+	{
+		List<Muser> l = userDao.find("from Muser m");
+		return l;
+	}
+	
 }

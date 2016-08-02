@@ -1,8 +1,8 @@
 package sy.dao;
 
-import sy.model.Tuser;
+import sy.model.Muser;
 
-public interface UserDaoI extends BaseDaoI<Tuser>
+public interface UserDaoI extends BaseDaoI<Muser>
 {
 
 }
