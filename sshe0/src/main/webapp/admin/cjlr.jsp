@@ -2,12 +2,12 @@
 <script type="text/javascript">
 	$(function(){
 		$('#admin_cjlr_datagrid').datagrid({
-			url : '${pageContext.request.contextPath}/userAction!datagrid.action',
+			url : '${pageContext.request.contextPath}/courseStuAction!datagrid.action',
 			fit : true,
 			fitColumns : true,
 			border : false,
 			pagination : true,
-			idField : 'id',
+			idField : 'cid',
 			pageSize : 10 ,
 			pageList : [10, 20, 30, 40, 50],
 			rownumbers : true,

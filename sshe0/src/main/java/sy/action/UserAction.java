@@ -98,12 +98,14 @@ public class UserAction extends BaseAction implements ModelDriven<User>
 	public void login()
 	{
 		User u = userService.login(user);
-		logger.info(user);
 		Json j = new Json();
 		if(u != null)
 		{
 			j.setSuccess(true);
 			j.setMsg("登陆成功！");
+			super.setFinalId(u.getId());
+			super.setFinalRole(u.getRole());
+			super.setFinalName(u.getName());
 		}
 		else
 		{

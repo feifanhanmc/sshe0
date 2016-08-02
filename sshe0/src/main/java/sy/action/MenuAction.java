@@ -41,7 +41,14 @@ public class MenuAction extends BaseAction implements ModelDriven<Menu>
 	
 	public void getTreeNode()
 	{
-		super.writeJson(menuService.getTreeNode(menu.getId()));
+		String uId = super.finalId;
+		String uRole = super.finalRole;
+		String uName = super.finalName;
+		
+		logger.info("uRole : " + uRole);
+		logger.info("uName : " + uName);
+		
+		super.writeJson(menuService.getTreeNode(menu.getId(), uId, uRole, uName));
 	}
 	
 	public void getAllTreeNode()

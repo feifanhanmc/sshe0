@@ -63,7 +63,13 @@ public class UserServiceImpl implements UserServiceI
 		params.put("pwd", Encrypt.e(user.getPwd()));
 		Muser m = userDao.get("from Muser m where m.account = :account and m.pwd = :pwd ",params);
 		if(m != null)
+		{
+			user.setRole(m.getRole());
+			user.setName(m.getName());
+			user.setId(m.getId());
 			return user;
+		}
+			
 		return null;
 	}
 

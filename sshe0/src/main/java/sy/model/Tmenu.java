@@ -27,14 +27,17 @@ public class Tmenu  implements java.io.Serializable {
      /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private String id;
+	 private static final long serialVersionUID = 1L;
+	 private String id;
      private Tmenu tmenu;
      private String text;
      private String iconcls;
      private String url;
      private Set<Tmenu> tmenus = new HashSet<Tmenu>(0);
 
+     private String pid;
+     
+     
 
     // Constructors
 
@@ -120,4 +123,15 @@ public class Tmenu  implements java.io.Serializable {
         this.tmenus = tmenus;
     }
 
+	public String getPid()
+	{
+		return pid;
+	}
+
+	public void setPid(String pid)
+	{
+		this.pid = pid;
+	}
+
+    
 }

@@ -35,7 +35,7 @@ public class MenuServiceImpl implements MenuServiceI
 	}
 
 	@Override
-	public List<Menu> getTreeNode(String id)
+	public List<Menu> getTreeNode(String id, String uId, String uRole, String uName)
 	{
 		List<Menu> nl = new ArrayList<Menu>();
 		String hql = null;
@@ -43,6 +43,18 @@ public class MenuServiceImpl implements MenuServiceI
 		if( id == null || id.equals("") )
 		{
 			hql = "from Tmenu t where t.tmenu is null";
+		}
+		else if( id.equals("0"))
+		{
+			String pids = null;
+			if( uRole.equals("admin"))
+				pids = "( 'xtgl', 'jwgl', 'cjgl')";
+			else if( uRole.equals("teacher"))
+				pids = "( 'jwgl', 'cjgl')";
+			else
+				pids = "( 'cjgl')";
+			
+			hql = "from Tmenu t where t.id in " + pids;
 		}
 		else
 		{
