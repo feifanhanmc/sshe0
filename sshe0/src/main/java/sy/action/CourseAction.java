@@ -85,6 +85,27 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 		super.writeJson(courseService.datagrid(course));
 	}
 	
+	public void remove()
+	{
+		courseService.remove(course.getCids());
+		Json j = new Json();
+		j.setSuccess(true);
+		j.setMsg("删除成功！");
+		
+		super.writeJson(j);
+	}
+	
+	public void edit()
+	{
+		Course c = courseService.edit(course);
+		Json j = new Json();
+		j.setSuccess(true);
+		j.setMsg("修改成功！");
+		j.setObj(c);
+		
+		super.writeJson(j);
+	}
+	
 	public void exportExcel()
 	{	
 		HttpServletResponse response = ServletActionContext.getResponse();

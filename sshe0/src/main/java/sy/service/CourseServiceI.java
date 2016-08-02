@@ -12,5 +12,9 @@ public interface CourseServiceI
 	
 	public DataGrid datagrid(Course course);
 	
+	public void remove(String ids);
+	
+	public Course edit(Course course);
+	
 	public List exportExcel();
 }

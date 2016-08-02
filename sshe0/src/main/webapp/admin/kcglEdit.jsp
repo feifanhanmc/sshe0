@@ -2,33 +2,23 @@
 <form id="admin_kcglEdit_editForm" method="post">
 	<table>
 		<tr>
-			<th>编号</th>
-			<td><input name="id" readonly="readonly" />
+			<th>课程编号</th>
+			<td><input name="cid" readonly="readonly" />
 			</td>
 		</tr>
 		<tr>
-			<th>账号</th>
-			<td><input name="account" class="easyui-validatebox" readonly="readonly" />
+			<th>课程名称</th>
+			<td><input name="cname" class="easyui-validatebox" />
 			</td>
 		</tr>
 		<tr>
-			<th>姓名</th>
-			<td><input name="name" class="easyui-validatebox" />
+			<th>课程教师</th>
+			<td><input name="tname" class="easyui-validatebox" />
 			</td>
 		</tr>
 		<tr>
-			<th>密码</th>
-			<td><input name="pwd" type="password" value="" class="easyui-validatebox" />
-			</td>
-		</tr>
-		<tr>
-			<th>角色</th>
-			<td>
-				<select class="easyui-combobox" name="role"  editable="false" style="width:143px;">
-    				<option value="student">student</option>
-    				<option value="teacher">teacher</option>
-    				<option value="admin">admin</option>
-				</select> 
+			<th>平均分</th>
+			<td><input name="avg"  class="easyui-validatebox" readonly="readonly"/>
 			</td>
 		</tr>
 	</table>

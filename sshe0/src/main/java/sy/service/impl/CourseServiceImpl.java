@@ -1,7 +1,6 @@
 package sy.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +14,9 @@ import org.springframework.stereotype.Service;
 import sy.dao.CourseDaoI;
 import sy.dao.UserDaoI;
 import sy.model.Mcourse;
-import sy.model.Muser;
 import sy.pageModel.Course;
 import sy.pageModel.DataGrid;
-import sy.pageModel.User;
 import sy.service.CourseServiceI;
-import sy.util.Encrypt;
 
 
 @Service("courseService")
@@ -133,5 +129,31 @@ public class CourseServiceImpl implements CourseServiceI
 	{
 		List<Mcourse> l = courseDao.find("from Mcourse m");
 		return l;
+	}
+
+	@Override
+	public void remove(String cids)
+	{
+		String [] ncids = cids.split(",");
+		String hql = "delete Mcourse mcourse where mcourse.cid in (";
+		for(int i = 0; i < ncids.length; i++)
+		{
+			if( i > 0)
+			{
+				hql += ",";				
+			}
+			hql += "'" + ncids[i] + "'";
+		}
+		hql += " ) ";
+		courseDao.executeHql(hql);
+		
+	}
+	
+	@Override
+	public Course edit(Course course)
+	{
+		Mcourse m = courseDao.get(Mcourse.class, course.getCid());
+		BeanUtils.copyProperties(course, m, new String[]{"avg"});
+		return course;
 	}
 }

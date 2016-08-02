@@ -89,14 +89,14 @@
 					iconCls : 'icon-ok',
 					handler: function(){
 						$('#admin_kcglEdit_editForm').form('submit',{
-							url : '${pageContext.request.contextPath}/userAction!edit.action',
+							url : '${pageContext.request.contextPath}/courseAction!edit.action',
 							success : function(r) {
 								var o = jQuery.parseJSON(r);
 								if (o.success) {
 									d.dialog('close');
 									//$('#admin_kcgl_datagrid').datagrid('reload');
 									$('#admin_kcgl_datagrid').datagrid('updateRow',{
-										index : $('#admin_kcgl_datagrid').datagrid('getRowIndex',rows[0].id),
+										index : $('#admin_kcgl_datagrid').datagrid('getRowIndex',rows[0].cid),
 										row : o.obj
 									});
 								}
@@ -149,17 +149,17 @@
 	
 	function remove(){
 		var rows = $('#admin_kcgl_datagrid').datagrid('getChecked');
-		var ids = [];
+		var cids = [];
 		if (rows.length > 0) {
 				$.messager.confirm('确认', '您是否要删除当前选中的项目？', function(r) {
 				if (r) {
 					for ( var i = 0; i < rows.length; i++) {
-						ids.push(rows[i].id);
+						cids.push(rows[i].cid);
 					}
 					$.ajax({
-						url : '${pageContext.request.contextPath}/userAction!remove.action',
+						url : '${pageContext.request.contextPath}/courseAction!remove.action',
 						data : {
-							ids : ids.join(',')
+							cids : cids.join(',')
 						},
 						dataType : 'json',
 						success : function(r) {
@@ -185,11 +185,11 @@
 </script>
 
 <div id = "admin_kcgl_layout" class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'north',title:'查询条件',border:false" style="height:60px;">
+	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
 		<form id="admin_kcgl_searchForm">
-			姓名查询:<input name="name"/>
+			查询条件:<input name="name"/>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="clearFun();">清空</a>	
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
 	</div>
 	<div data-options="region:'center'">

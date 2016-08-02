@@ -22,7 +22,19 @@ public class Course implements java.io.Serializable
 	
 	private String tname;
 	
+	private String cids;
 	
+	
+	
+
+	public String getCids()
+	{
+		return cids;
+	}
+	public void setCids(String cids)
+	{
+		this.cids = cids;
+	}
 	public String getTname()
 	{
 		return tname;

@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	$(function(){
-		$('#admin_jsgl_datagrid').datagrid({
+		$('#admin_cjlr_datagrid').datagrid({
 			url : '${pageContext.request.contextPath}/userAction!datagrid.action',
 			fit : true,
 			fitColumns : true,
@@ -90,27 +90,27 @@
 	}		
 
 	function editFun(){
-		var rows = $('#admin_jsgl_datagrid').datagrid('getChecked');
+		var rows = $('#admin_cjlr_datagrid').datagrid('getChecked');
 		if(rows.length == 1){
 			var d = $('<div/>').dialog({
 				width : 220,
 				height : 200,
-				href : '${pageContext.request.contextPath}/admin/jsglEdit.jsp',
+				href : '${pageContext.request.contextPath}/admin/cjlrEdit.jsp',
 				modal : true,
 				title : '编辑用户',
 				buttons : [{
 					text:'确定',
 					iconCls : 'icon-ok',
 					handler: function(){
-						$('#admin_jsglEdit_editForm').form('submit',{
+						$('#admin_cjlrEdit_editForm').form('submit',{
 							url : '${pageContext.request.contextPath}/userAction!edit.action',
 							success : function(r) {
 								var o = jQuery.parseJSON(r);
 								if (o.success) {
 									d.dialog('close');
-									//$('#admin_jsgl_datagrid').datagrid('reload');
-									$('#admin_jsgl_datagrid').datagrid('updateRow',{
-										index : $('#admin_jsgl_datagrid').datagrid('getRowIndex',rows[0].id),
+									//$('#admin_cjlr_datagrid').datagrid('reload');
+									$('#admin_cjlr_datagrid').datagrid('updateRow',{
+										index : $('#admin_cjlr_datagrid').datagrid('getRowIndex',rows[0].id),
 										row : o.obj
 									});
 								}
@@ -126,10 +126,10 @@
 					$(this).dialog('destroy');
 				},
 				onLoad : function(){
-					//$('#admin_jsglEdit_editForm input[name=id]').val(rows[0].id);
-					//$('#admin_jsglEdit_editForm input[name=name]').val(rows[0].name);
-					$('#admin_jsglEdit_editForm').form('load', rows[0]);
-					$('#admin_jsglEdit_editForm input[name=pwd]').val(''); 
+					//$('#admin_cjlrEdit_editForm input[name=id]').val(rows[0].id);
+					//$('#admin_cjlrEdit_editForm input[name=name]').val(rows[0].name);
+					$('#admin_cjlrEdit_editForm').form('load', rows[0]);
+					$('#admin_cjlrEdit_editForm input[name=pwd]').val(''); 
 				}
 			});
 		}else{
@@ -148,21 +148,21 @@
 	}
 	
 	function searchFun(){
-		$('#admin_jsgl_datagrid').datagrid('load',serializeObject($('#admin_jsgl_searchForm')));
+		$('#admin_cjlr_datagrid').datagrid('load',serializeObject($('#admin_cjlr_searchForm')));
 	}
 	
 	function clearFun(){
-		$('#admin_jsgl_layout input[name=name]').val('');
-		$('#admin_jsgl_datagrid').datagrid('load',{});
+		$('#admin_cjlr_layout input[name=name]').val('');
+		$('#admin_cjlr_datagrid').datagrid('load',{});
 	}
 	
 	function append(){
-		$('#admin_jsgl_addForm input').val('');
-		$('#admin_jsgl_addDialog').dialog('open');
+		$('#admin_cjlr_addForm input').val('');
+		$('#admin_cjlr_addDialog').dialog('open');
 	}
 	
 	function remove(){
-		var rows = $('#admin_jsgl_datagrid').datagrid('getChecked');
+		var rows = $('#admin_cjlr_datagrid').datagrid('getChecked');
 		var ids = [];
 		if (rows.length > 0) {
 				$.messager.confirm('确认', '您是否要删除当前选中的项目？', function(r) {
@@ -177,9 +177,9 @@
 						},
 						dataType : 'json',
 						success : function(r) {
-							//$('#admin_jsgl_datagrid').datagrid('reload');
-							$('#admin_jsgl_datagrid').datagrid('load');						
-							$('#admin_jsgl_datagrid').datagrid('unselectAll');
+							//$('#admin_cjlr_datagrid').datagrid('reload');
+							$('#admin_cjlr_datagrid').datagrid('load');						
+							$('#admin_cjlr_datagrid').datagrid('unselectAll');
 							$.messager.show({
 								title : '提示',
 								msg : r.msg
@@ -197,49 +197,49 @@
 	}
 
 //	$(function() {
-//		$('#admin_jsgl_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
+//		$('#admin_cjlr_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
 //			if (event.keyCode == '13') {
-//				$('#admin_jsgl_datagrid').datagrid('load',serializeObject($('#admin_jsgl_searchForm')));
+//				$('#admin_cjlr_datagrid').datagrid('load',serializeObject($('#admin_cjlr_searchForm')));
 //			}
 //		});
 //	});
 
 </script>
 
-<div id = "admin_jsgl_layout" class="easyui-layout" data-options="fit:true,border:false">
+<div id = "admin_cjlr_layout" class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
-		<form id="admin_jsgl_searchForm">
+		<form id="admin_cjlr_searchForm">
 			查询条件:<input name="name"/>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
 	</div>
 	<div data-options="region:'center'">
-		<table id="admin_jsgl_datagrid"></table>
+		<table id="admin_cjlr_datagrid"></table>
 	</div>
 </div>
-<div id="admin_jsgl_addDialog" class="easyui-dialog" data-options="closed:true,modal:true,title:'添加用户',buttons:[{
+<div id="admin_cjlr_addDialog" class="easyui-dialog" data-options="closed:true,modal:true,title:'添加用户',buttons:[{
 				text : '清空',
 				iconCls : 'icon-undo',
 				handler : function(){
-					$('#admin_jsgl_addForm input').val('');
+					$('#admin_cjlr_addForm input').val('');
 				}
 				},{
 				text : '确定',
 				iconCls : 'icon-ok',
 				handler : function(){
-					$('#admin_jsgl_addForm').form('submit',{
+					$('#admin_cjlr_addForm').form('submit',{
 							url:'${pageContext.request.contextPath}/userAction!add.action',
 							success:function(r){
 									var o = jQuery.parseJSON(r);
 									if(o.success){
-										/*$('#admin_jsgl_datagrid').datagrid('load');*/
-										/*$('#admin_jsgl_datagrid').datagrid('appendRow',o.obj);*/
-										$('#admin_jsgl_datagrid').datagrid('insertRow',{
+										/*$('#admin_cjlr_datagrid').datagrid('load');*/
+										/*$('#admin_cjlr_datagrid').datagrid('appendRow',o.obj);*/
+										$('#admin_cjlr_datagrid').datagrid('insertRow',{
 											index:0,
 											row:o.obj
 										});
-										$('#admin_jsgl_addDialog').dialog('close');
+										$('#admin_cjlr_addDialog').dialog('close');
 									}
 									$.messager.show({
 										title : '提示',
@@ -249,7 +249,7 @@
 					});
 				}
 			}]" style="width:220px;height:190px;" align="center">
-	<form id="admin_jsgl_addForm" method="post">
+	<form id="admin_cjlr_addForm" method="post">
 	<table>
 		<tr>
 			<th>账号</th>

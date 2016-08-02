@@ -11,12 +11,16 @@ import javax.persistence.Table;
  * McourseStu entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "MCOURSESTU", schema = "SSHE")
+@Table(name = "MCOURSE_STU", schema = "SSHE")
 public class McourseStu implements java.io.Serializable
 {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String cid;
 	private String sid;
 	private String grade;
