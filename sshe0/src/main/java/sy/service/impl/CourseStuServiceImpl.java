@@ -11,11 +11,9 @@ import org.springframework.stereotype.Service;
 
 import sy.dao.CourseDaoI;
 import sy.dao.CourseStuDaoI;
-import sy.dao.CourseStuIdDaoI;
 import sy.dao.UserDaoI;
 import sy.model.Mcourse;
 import sy.model.McourseStu;
-import sy.model.McourseStuId;
 import sy.model.Muser;
 import sy.pageModel.CourseStu;
 import sy.pageModel.DataGrid;
