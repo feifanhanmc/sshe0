@@ -5,24 +5,31 @@
 			<th>编号</th>
 			<td><input name="id" readonly="readonly" />
 			</td>
-			<th>登录名称</th>
-			<td><input name="name" class="easyui-validatebox" data-options="required:true" />
+		</tr>
+		<tr>
+			<th>账号</th>
+			<td><input name="account" class="easyui-validatebox" readonly="readonly" />
+			</td>
+		</tr>
+		<tr>
+			<th>姓名</th>
+			<td><input name="name" class="easyui-validatebox" />
 			</td>
 		</tr>
 		<tr>
 			<th>密码</th>
-			<td><input name="pwd" type="password" class="easyui-validatebox" data-options="required:true" />
-			</td>
-			<th>创建时间</th>
-			<td><input name="createdatetime" readonly="readonly" />
+			<td><input name="pwd" type="password" value="" class="easyui-validatebox" />
 			</td>
 		</tr>
 		<tr>
-			<th>最后修改时间</th>
-			<td><input name="modifydatetime" readonly="readonly" />
+			<th>角色</th>
+			<td>
+				<select class="easyui-combobox" name="role"  editable="false" style="width:143px;">
+    				<option value="student">student</option>
+    				<option value="teacher">teacher</option>
+    				<option value="admin">admin</option>
+				</select> 
 			</td>
-			<th></th>
-			<td></td>
 		</tr>
 	</table>
 </form>

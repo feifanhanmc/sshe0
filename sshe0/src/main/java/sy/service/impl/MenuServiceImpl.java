@@ -49,7 +49,6 @@ public class MenuServiceImpl implements MenuServiceI
 		 *       |成绩录入		teacher
 		 * 系统管理|
 		 *       |角色管理		admin
-		 *       |权限管理		admin
 		 */
 		if( id == null || id.equals("") )
 			hql = "from Tmenu t where t.tmenu is null";

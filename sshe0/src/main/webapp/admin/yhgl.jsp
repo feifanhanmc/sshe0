@@ -23,27 +23,33 @@
 				checkbox : true
 				//hidden : true	
 			},{
-				field : 'name',
-				title : '登陆名称',
-				width : 150,
+				field : 'account',
+				title : '账号',
+				width : 80,
 				sortable : true				
 			}]],
 			columns : [ [ {
+				field : 'name',
+				title : '姓名',
+				width : 80,
+				sortable : true
+			},{
+				field : 'role',
+				title : '角色',
+				width : 50,
+				sortable : true
+				
+			},{
 				field : 'pwd',
 				title : '密码',
-				width : 150,
+				width : 50,
 				formatter : function(value, row, index){
 					//return '<span title="' + row.name + ' : ' +value + '">' + value + '</span>';
 					return '******';
 				}
 			},{
-				field : 'createdatetime',
-				title : '创建时间',
-				width : 150,
-				sortable : true		
-			},{
-				field : 'modifydatetime',
-				title : '最后修改时间',
+				field : 'modifytime',
+				title : '修改时间',
 				width : 150,
 				sortable : true													
 			}]],
@@ -65,16 +71,30 @@
 				handler : function(){
 					editFun();
 				}
+			},'-',{
+				text : '保存为Excel',
+				iconCls : 'icon-ok',
+				handler : function(){
+					exportExcel();
+				}
 			},'-']
 		});
 	});
 	
+	
+
+	function exportExcel(){
+		var postForm = document.getElementById("excelForm");
+		postForm.action = "${pageContext.request.contextPath}/userAction!exportExcel.action";
+		postForm.submit();
+	}		
+
 	function editFun(){
 		var rows = $('#admin_yhgl_datagrid').datagrid('getChecked');
 		if(rows.length == 1){
 			var d = $('<div/>').dialog({
-				width : 500,
-				height : 250,
+				width : 220,
+				height : 200,
 				href : '${pageContext.request.contextPath}/admin/yhglEdit.jsp',
 				modal : true,
 				title : '编辑用户',
@@ -108,7 +128,8 @@
 				onLoad : function(){
 					//$('#admin_yhglEdit_editForm input[name=id]').val(rows[0].id);
 					//$('#admin_yhglEdit_editForm input[name=name]').val(rows[0].name);
-					$('#admin_yhglEdit_editForm').form('load', rows[0]); 
+					$('#admin_yhglEdit_editForm').form('load', rows[0]);
+					$('#admin_yhglEdit_editForm input[name=pwd]').val(''); 
 				}
 			});
 		}else{
@@ -174,13 +195,23 @@
 			});
 		}
 	}
+
+//	$(function() {
+//		$('#admin_yhgl_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
+//			if (event.keyCode == '13') {
+//				$('#admin_yhgl_datagrid').datagrid('load',serializeObject($('#admin_yhgl_searchForm')));
+//			}
+//		});
+//	});
+
 </script>
+
 <div id = "admin_yhgl_layout" class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'north',title:'查询条件',border:false" style="height:52px;">
+	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
 		<form id="admin_yhgl_searchForm">
-			检索用户名称(可模糊查询):<input name="name"/>
+			查询条件:<input name="name"/>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="clearFun();">清空</a>	
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
 	</div>
 	<div data-options="region:'center'">
@@ -188,6 +219,12 @@
 	</div>
 </div>
 <div id="admin_yhgl_addDialog" class="easyui-dialog" data-options="closed:true,modal:true,title:'添加用户',buttons:[{
+				text : '清空',
+				iconCls : 'icon-undo',
+				handler : function(){
+					$('#admin_yhgl_addForm input').val('');
+				}
+				},{
 				text : '确定',
 				iconCls : 'icon-ok',
 				handler : function(){
@@ -211,32 +248,37 @@
 							}
 					});
 				}
-			}]" style="width:500px;height:250px;" align="center">
+			}]" style="width:220px;height:190px;" align="center">
 	<form id="admin_yhgl_addForm" method="post">
 	<table>
 		<tr>
-			<th>编号</th>
-			<td><input name="id" readonly="readonly" />
-			</td>
-			<th>登录名称</th>
-			<td><input name="name" class="easyui-validatebox" data-options="required:true" />
+			<th>账号</th>
+			<td><input name="account" class="easyui-validatebox" data-options="required:true" />
 			</td>
 		</tr>
 		<tr>
 			<th>密码</th>
-			<td><input name="pwd" type="password" class="easyui-validatebox" data-options="required:true" />
-			</td>
-			<th>创建时间</th>
-			<td><input name="createdatetime" readonly="readonly" />
+			<td><input name="pwd" class="easyui-validatebox" data-options="required:true"/>
 			</td>
 		</tr>
 		<tr>
-			<th>最后修改时间</th>
-			<td><input name="modifydatetime" readonly="readonly" />
+			<th>姓名</th>
+			<td><input name="name" class="easyui-validatebox" data-options="required:true" />
 			</td>
-			<th></th>
-			<td></td>
+		</tr>
+		<tr>
+			<th>角色</th>
+			<td>
+				<select class="easyui-combobox" name="role" panelHeight="auto" editable="false" style="width:143px; ">
+    				<option value="student">student</option>
+    				<option value="teacher">teacher</option>
+    				<option value="admin">admin</option>
+				</select> 
+			</td>
 		</tr>
 	</table>
 	</form>
 </div>
+
+<form id="excelForm" method="post">
+</form>
