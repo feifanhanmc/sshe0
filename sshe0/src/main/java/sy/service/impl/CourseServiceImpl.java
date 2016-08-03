@@ -88,6 +88,7 @@ public class CourseServiceImpl implements CourseServiceI
 		List<Course> nl = new ArrayList<Course>();
 		changeModel(l, nl);
 		dg.setTotal(courseDao.count(totalHql, params));
+		logger.info("params from CourseService : " + params);
 		dg.setRows(nl);
 		return dg;
 	}

@@ -58,8 +58,17 @@ public class MenuServiceImpl implements MenuServiceI
 		}
 		else
 		{
-			hql = "from Tmenu t where t.tmenu.id = :id ";
-			params.put("id", id);
+			//在这里设置不同的教师只能打开自己的成绩录入界面，而管理员所有的都可以看到（包括所有老师的界面和课程管理界面）
+			if( uRole.equals("teacher") )
+			{
+				hql = "from Tmenu t where t.id = 'cjlr'";
+			}
+			else
+			{
+				hql = "from Tmenu t where t.tmenu.id = :id ";
+				params.put("id", id);
+			}
+
 		}
 		List<Tmenu> l = menuDao.find(hql, params);
 		if( l != null && l.size() > 0)

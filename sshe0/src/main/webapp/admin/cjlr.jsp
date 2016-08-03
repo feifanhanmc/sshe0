@@ -7,7 +7,7 @@
 			fitColumns : true,
 			border : false,
 			pagination : true,
-			idField : 'cid',
+			idField : 'sid',
 			pageSize : 10 ,
 			pageList : [10, 20, 30, 40, 50],
 			rownumbers : true,
@@ -17,55 +17,38 @@
 			checkOnSelect : false ,
 			selectOnCheck : false ,
 			frozenColumns : [ [ {
-				field : 'id',
-				title : '编号',
+				field : 'sid',
+				title : '学生ID',
 				width : 150,
 				checkbox : true
 				//hidden : true	
 			},{
-				field : 'account',
-				title : '账号',
+				field : 'sname',
+				title : '学生姓名',
 				width : 80,
 				sortable : true				
 			}]],
 			columns : [ [ {
-				field : 'name',
-				title : '姓名',
+				field : 'grade',
+				title : '分数',
 				width : 80,
 				sortable : true
 			},{
-				field : 'role',
-				title : '角色',
+				field : 'rank',
+				title : '排名',
 				width : 50,
 				sortable : true
 				
 			},{
-				field : 'pwd',
-				title : '密码',
+				field : 'cname',
+				title : '课程名称',
 				width : 50,
 				formatter : function(value, row, index){
 					//return '<span title="' + row.name + ' : ' +value + '">' + value + '</span>';
 					return '******';
-				}
-			},{
-				field : 'modifytime',
-				title : '修改时间',
-				width : 150,
-				sortable : true													
+				}								
 			}]],
-			toolbar : [ { 
-				text : '增加',
-				iconCls : 'icon-add',
-				handler : function(){
-					append();
-				}
-			},'-',{
-				text : '删除',
-				iconCls : 'icon-remove',
-				handler : function(){
-					remove();
-				}
-			},'-',{
+			toolbar : [ {
 				text : '修改',
 				iconCls : 'icon-edit',
 				handler : function(){
@@ -155,54 +138,6 @@
 		$('#admin_cjlr_layout input[name=name]').val('');
 		$('#admin_cjlr_datagrid').datagrid('load',{});
 	}
-	
-	function append(){
-		$('#admin_cjlr_addForm input').val('');
-		$('#admin_cjlr_addDialog').dialog('open');
-	}
-	
-	function remove(){
-		var rows = $('#admin_cjlr_datagrid').datagrid('getChecked');
-		var ids = [];
-		if (rows.length > 0) {
-				$.messager.confirm('确认', '您是否要删除当前选中的项目？', function(r) {
-				if (r) {
-					for ( var i = 0; i < rows.length; i++) {
-						ids.push(rows[i].id);
-					}
-					$.ajax({
-						url : '${pageContext.request.contextPath}/userAction!remove.action',
-						data : {
-							ids : ids.join(',')
-						},
-						dataType : 'json',
-						success : function(r) {
-							//$('#admin_cjlr_datagrid').datagrid('reload');
-							$('#admin_cjlr_datagrid').datagrid('load');						
-							$('#admin_cjlr_datagrid').datagrid('unselectAll');
-							$.messager.show({
-								title : '提示',
-								msg : r.msg
-							});
-						}
-					});
-				}
-			});
-		} else {
-			$.messager.show({
-				title : '提示',
-				msg : '请勾选要删除的记录！'
-			});
-		}
-	}
-
-//	$(function() {
-//		$('#admin_cjlr_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
-//			if (event.keyCode == '13') {
-//				$('#admin_cjlr_datagrid').datagrid('load',serializeObject($('#admin_cjlr_searchForm')));
-//			}
-//		});
-//	});
 
 </script>
 
@@ -217,67 +152,6 @@
 	<div data-options="region:'center'">
 		<table id="admin_cjlr_datagrid"></table>
 	</div>
-</div>
-<div id="admin_cjlr_addDialog" class="easyui-dialog" data-options="closed:true,modal:true,title:'添加用户',buttons:[{
-				text : '清空',
-				iconCls : 'icon-undo',
-				handler : function(){
-					$('#admin_cjlr_addForm input').val('');
-				}
-				},{
-				text : '确定',
-				iconCls : 'icon-ok',
-				handler : function(){
-					$('#admin_cjlr_addForm').form('submit',{
-							url:'${pageContext.request.contextPath}/userAction!add.action',
-							success:function(r){
-									var o = jQuery.parseJSON(r);
-									if(o.success){
-										/*$('#admin_cjlr_datagrid').datagrid('load');*/
-										/*$('#admin_cjlr_datagrid').datagrid('appendRow',o.obj);*/
-										$('#admin_cjlr_datagrid').datagrid('insertRow',{
-											index:0,
-											row:o.obj
-										});
-										$('#admin_cjlr_addDialog').dialog('close');
-									}
-									$.messager.show({
-										title : '提示',
-										msg : o.msg
-									});
-							}
-					});
-				}
-			}]" style="width:220px;height:190px;" align="center">
-	<form id="admin_cjlr_addForm" method="post">
-	<table>
-		<tr>
-			<th>账号</th>
-			<td><input name="account" class="easyui-validatebox" data-options="required:true" />
-			</td>
-		</tr>
-		<tr>
-			<th>密码</th>
-			<td><input name="pwd" class="easyui-validatebox" data-options="required:true"/>
-			</td>
-		</tr>
-		<tr>
-			<th>姓名</th>
-			<td><input name="name" class="easyui-validatebox" data-options="required:true" />
-			</td>
-		</tr>
-		<tr>
-			<th>角色</th>
-			<td>
-				<select class="easyui-combobox" name="role"  editable="false" style="width:143px;">
-    				<option value="student">student</option>
-    				<option value="teacher">teacher</option>
-    				<option value="admin">admin</option>
-				</select> 
-			</td>
-		</tr>
-	</table>
-	</form>
 </div>
 
 <form id="excelForm" method="post">

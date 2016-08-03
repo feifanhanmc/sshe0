@@ -17,9 +17,16 @@
 </head>
 
 <body class="easyui-layout">
-    <div data-options="region:'north',title:'North Title',split:false,border:true" style="height:100px;"></div>
+    <div data-options="region:'north',split:false,border:true" style="height:100px;">
+    	<img src="image/head.png" width="100%" height="100%"/>
+    </div>
     <div data-options="region:'south',title:'South Title',split:false,border:true" style="height:100px;"></div>
-    <div data-options="region:'east',title:'East',split:true,border:false" style="width:180px;"></div>
+    <!-- 
+    <div data-options="region:'east',title:'East',split:true,border:false,collapsible:false" style="width:180px;"></div>
+     -->
+     <div data-options="region:'east'"style="width:180px;">
+     	<div class="easyui-panel" data-options="title:'快速链接',border:false,fit:true"></div>
+     </div>
     <div data-options="region:'west'" style="width:180px;">
 		<jsp:include page="layout/west.jsp"></jsp:include>
 	</div>

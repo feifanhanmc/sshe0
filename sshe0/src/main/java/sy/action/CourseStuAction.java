@@ -40,6 +40,11 @@ public class CourseStuAction extends BaseAction implements ModelDriven<CourseStu
 		this.courseStuService = courseStuService;
 	}
 	
+	public void datagrid()
+	{
+		String tId = super.finalId;
+		super.writeJson(courseStuService.datagrid(courseStu, tId));
+	}
 	
 		
 }
