@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import sy.model.McourseStuId;
+
 /**
  * McourseStu entity. @author MyEclipse Persistence Tools
  */
@@ -17,12 +19,7 @@ public class McourseStu implements java.io.Serializable
 
 	// Fields
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String cid;
-	private String sid;
+	private McourseStuId id;
 	private String grade;
 	private BigDecimal rank;
 
@@ -34,41 +31,30 @@ public class McourseStu implements java.io.Serializable
 	}
 
 	/** minimal constructor */
-	public McourseStu(String cid)
+	public McourseStu(McourseStuId id)
 	{
-		this.cid = cid;
+		this.id = id;
 	}
 
 	/** full constructor */
-	public McourseStu(String cid, String sid, String grade, BigDecimal rank)
+	public McourseStu(McourseStuId id, String grade, BigDecimal rank)
 	{
-		this.cid = cid;
-		this.sid = sid;
+		this.id = id;
 		this.grade = grade;
 		this.rank = rank;
 	}
 
 	// Property accessors
 	@Id
-	@Column(name = "CID", unique = true, nullable = false, length = 36)
-	public String getCid()
+	@Column(name = "ID", unique = true, nullable = false, length = 36)
+	public McourseStuId getId()
 	{
-		return this.cid;
+		return this.id;
 	}
 
-	public void setCid(String cid)
+	public void setId(McourseStuId id)
 	{
-		this.cid = cid;
-	}
-
-	public String getSid()
-	{
-		return this.sid;
-	}
-
-	public void setSid(String sid)
-	{
-		this.sid = sid;
+		this.id = id;
 	}
 
 	public String getGrade()

@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import sy.dao.CourseDaoI;
 import sy.dao.CourseStuDaoI;
+import sy.dao.CourseStuIdDaoI;
 import sy.dao.UserDaoI;
 import sy.model.Mcourse;
 import sy.model.McourseStu;
+import sy.model.McourseStuId;
 import sy.model.Muser;
 import sy.pageModel.CourseStu;
 import sy.pageModel.DataGrid;
@@ -27,6 +29,8 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 	
 	private CourseStuDaoI courseStuDao;
+	
+	private CourseStuIdDaoI courseStuIdDao;
 	
 	private UserDaoI userDao;
 	
@@ -46,6 +50,17 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	}
 
 	
+	public CourseStuIdDaoI getCourseStuIdDao()
+	{
+		return courseStuIdDao;
+	}
+
+	@Autowired
+	public void setCourseStuIdDao(CourseStuIdDaoI courseStuIdDao)
+	{
+		this.courseStuIdDao = courseStuIdDao;
+	}
+
 	public UserDaoI getUserDao()
 	{
 		return userDao;
@@ -107,12 +122,14 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 
 		
 		//课程查询
-		String chql = "from McourseStu cm where cm.cid = '" + cId+ "'";
+//		String chql = "from McourseStu cm where cm.cid = '" + cId+ "'";
+		String chql = "from McourseStuId cm where cm.cid = '" + cId+ "'";
 //		logger.info("chql : " + chql);
 //		chql = addWhere(courseStu, chql, params);
 //		chql = addOrder(courseStu, chql);
 //		List<McourseStu> l = courseStuDao.find(chql, params, courseStu.getPage(), courseStu.getRows());
-		List<McourseStu> l = courseStuDao.find(chql);
+//		List<McourseStu> l = courseStuDao.find(chql);
+		List<McourseStuId> l = courseStuIdDao.find(chql);
 		logger.info("l.get(0) : " + l.get(0));
 		logger.info("l.get(1) : " + l.get(1));
 //		logger.info("chql : " + chql);
@@ -131,7 +148,7 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		return dg;
 	}
 
-	private void changeModel(List<McourseStu> l, List<CourseStu> nl, List<Muser> ul, String cName) 
+	private void changeModel(List<McourseStuId> l, List<CourseStu> nl, List<Muser> ul, String cName) 
 	{	
 		if (l != null && l.size() > 0) 
 		{
@@ -140,8 +157,10 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 			for(int i = 0; i < l.size(); i++)
 			{
 				logger.error("l.get(i) : " + l.get(i));
-				McourseStu m = (McourseStu) l.get(i);
+				McourseStuId m = (McourseStuId) l.get(i);
 
+				String test = "from McourseStu cm where cm.cid = '" + m.getCid() + "'" + " and cm.sid = '" + m.getSid() + "'";
+				McourseStu mstu = courseStuDao.get(test);
 				
 				CourseStu c = new CourseStu();
 				
@@ -150,8 +169,11 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 //				String sid = m.getSid();
 				
 				c.setSid(m.getSid());
-				c.setGrade(m.getGrade());
-				c.setRank(m.getRank());
+				
+				
+				
+				c.setGrade(mstu.getGrade());
+				c.setRank(mstu.getRank());
 				
 				for(Muser ms : ul)
 				{
