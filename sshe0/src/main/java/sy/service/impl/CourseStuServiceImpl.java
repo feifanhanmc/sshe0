@@ -30,8 +30,6 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	
 	private CourseStuDaoI courseStuDao;
 	
-	private CourseStuIdDaoI courseStuIdDao;
-	
 	private UserDaoI userDao;
 	
 	private CourseDaoI courseDao;
@@ -49,17 +47,6 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		this.courseStuDao = courseStuDao;
 	}
 
-	
-	public CourseStuIdDaoI getCourseStuIdDao()
-	{
-		return courseStuIdDao;
-	}
-
-	@Autowired
-	public void setCourseStuIdDao(CourseStuIdDaoI courseStuIdDao)
-	{
-		this.courseStuIdDao = courseStuIdDao;
-	}
 
 	public UserDaoI getUserDao()
 	{
@@ -89,30 +76,22 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	@Override
 	public DataGrid datagrid(CourseStu courseStu, String tId)
 	{
-		//查询Muser表获取sname,sid
-		//查询McourseStu表获取sid对应的grade,rank
-		//		以及cid对应的cname
+		/*
+		 * 查询Muser表获取sname,sid
+		 * 查询McourseStu表获取sid对应的grade,rank以及cid对应的cname
+		 */
 		DataGrid dg = new DataGrid();
 		Map<String, Object> params = new HashMap<String, Object>();
 		
-		
-		
-		//从Muser中查询student
+//		从Muser中查询student
 		String uhql = "from Muser um where um.role = 'student'";
-		
-		
-		
-		//总记录数,即学生总数
+//		总记录数,即学生总数
 		String totalHql = "select count(*) " + uhql;
 		dg.setTotal(userDao.count(totalHql, params));
-		logger.info("total : " + userDao.count(totalHql, params));
-		
-		//执行student查询
+//		执行student查询
 //		List<Muser> ul = userDao.find(uhql, params, courseStu.getPage(), courseStu.getRows());
-//		logger.info("uhql : " + uhql);
 		List<Muser> ul = userDao.find(uhql);
-//		logger.info("uhql : " + uhql);
-		
+
 		
 //		查询此老师tId对应的cId和cName
 		String thql =  "from Mcourse mc where mc.tid = '" + tId + "'";
@@ -121,25 +100,17 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		String cName = mcourse.getCname();
 
 		
-		//课程查询
-//		String chql = "from McourseStu cm where cm.cid = '" + cId+ "'";
-		String chql = "from McourseStuId cm where cm.cid = '" + cId+ "'";
-//		logger.info("chql : " + chql);
+//		课程查询
+		String chql = "from McourseStu cm where cm.cid = '" + cId+ "'";
 //		chql = addWhere(courseStu, chql, params);
 //		chql = addOrder(courseStu, chql);
 //		List<McourseStu> l = courseStuDao.find(chql, params, courseStu.getPage(), courseStu.getRows());
-//		List<McourseStu> l = courseStuDao.find(chql);
-		List<McourseStuId> l = courseStuIdDao.find(chql);
-		logger.info("l.get(0) : " + l.get(0));
-		logger.info("l.get(1) : " + l.get(1));
-//		logger.info("chql : " + chql);
+		List<McourseStu> l = courseStuDao.find(chql);
 		
 		
 		
 		List<CourseStu> nl = new ArrayList<CourseStu>();
-		
-		
-		
+	
 		changeModel(l, nl, ul, cName);
 		
 		
@@ -148,51 +119,23 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		return dg;
 	}
 
-	private void changeModel(List<McourseStuId> l, List<CourseStu> nl, List<Muser> ul, String cName) 
+	private void changeModel(List<McourseStu> l, List<CourseStu> nl, List<Muser> ul, String cName) 
 	{	
 		if (l != null && l.size() > 0) 
 		{
-			
-//			for (McourseStu m : l) 
 			for(int i = 0; i < l.size(); i++)
 			{
-				logger.error("l.get(i) : " + l.get(i));
-				McourseStuId m = (McourseStuId) l.get(i);
-
-				String test = "from McourseStu cm where cm.cid = '" + m.getCid() + "'" + " and cm.sid = '" + m.getSid() + "'";
-				McourseStu mstu = courseStuDao.get(test);
-				
+				McourseStu m = (McourseStu) l.get(i);
 				CourseStu c = new CourseStu();
-				
-				logger.error("m : " + m);
-				logger.error("m.getSid() : " + m.getSid());
-//				String sid = m.getSid();
-				
+
 				c.setSid(m.getSid());
-				
-				
-				
-				c.setGrade(mstu.getGrade());
-				c.setRank(mstu.getRank());
-				
-				for(Muser ms : ul)
-				{
-//					logger.error("m.getSid() : " + m.getSid());
-					
-					if(ms.getId().equals(m.getSid()))
-					{
-//						logger.error("ms.getId() : " + ms.getId());
-						c.setSname(ms.getName());
-					}
-				}
-
-					
-
-				
+				c.setGrade(m.getGrade());
+				c.setRank(m.getRank());
 				c.setCname(cName);
-				
-//				BeanUtils.copyProperties(m, c);
-				
+				for(Muser ms : ul)
+					if(ms.getId().equals(m.getSid()))
+						c.setSname(ms.getName());
+
 				nl.add(c);
 			
 			}
