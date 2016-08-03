@@ -14,9 +14,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import sy.dao.UserDaoI;
 import sy.model.Muser;
 import sy.pageModel.DataGrid;
+import sy.pageModel.Json;
 import sy.pageModel.User;
 import sy.service.UserServiceI;
 import sy.util.Encrypt;
@@ -171,6 +175,22 @@ public class UserServiceImpl implements UserServiceI
 	{
 		List<Muser> l = userDao.find("from Muser m");
 		return l;
+	}
+
+	@Override
+	public JSONArray getTname()
+	{
+		JSONArray j = new JSONArray();
+		List<Muser> mu = userDao.find("from Muser m where m.role = 'teacher' ");
+		
+		for(Muser muser : mu)
+		{
+			JSONObject jo = new JSONObject();
+			jo.put("kcgl_id", muser.getName());
+			jo.put("kegl_text", muser.getName());
+			j.add(jo);
+		}
+		return j;
 	}
 	
 }

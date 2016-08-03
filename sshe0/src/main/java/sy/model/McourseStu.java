@@ -20,8 +20,8 @@ public class McourseStu implements java.io.Serializable
 	private String csid;
 	private String cid;
 	private String sid;
-	private String grade;
-	private BigDecimal rank;
+	private float grade;
+	private int rank;
 
 	// Constructors
 
@@ -37,8 +37,8 @@ public class McourseStu implements java.io.Serializable
 	}
 
 	/** full constructor */
-	public McourseStu(String csid, String cid, String sid, String grade,
-			BigDecimal rank)
+	public McourseStu(String csid, String cid, String sid, float grade,
+			int rank)
 	{
 		this.csid = csid;
 		this.cid = cid;
@@ -80,22 +80,22 @@ public class McourseStu implements java.io.Serializable
 		this.sid = sid;
 	}
 
-	public String getGrade()
+	public float getGrade()
 	{
 		return this.grade;
 	}
 
-	public void setGrade(String grade)
+	public void setGrade(float grade)
 	{
 		this.grade = grade;
 	}
 
-	public BigDecimal getRank()
+	public int getRank()
 	{
 		return this.rank;
 	}
 
-	public void setRank(BigDecimal rank)
+	public void setRank(int rank)
 	{
 		this.rank = rank;
 	}

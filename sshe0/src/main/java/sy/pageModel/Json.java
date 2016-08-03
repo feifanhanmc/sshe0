@@ -14,8 +14,32 @@ public class Json implements Serializable
 	
 	private String name;
 	
+	private String kcgl_id;
+	
+	private String kegl_text;
 	
 	
+	
+	public String getKcgl_id()
+	{
+		return kcgl_id;
+	}
+
+	public void setKcgl_id(String kcgl_id)
+	{
+		this.kcgl_id = kcgl_id;
+	}
+
+	public String getKegl_text()
+	{
+		return kegl_text;
+	}
+
+	public void setKegl_text(String kegl_text)
+	{
+		this.kegl_text = kegl_text;
+	}
+
 	public String getName()
 	{
 		return name;

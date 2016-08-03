@@ -144,7 +144,17 @@
 	
 	function append(){
 		$('#admin_kcgl_addForm input').val('');
+		//动态加载<ComboBox>所需要的数据
+		$.ajax({
+				url : '${pageContext.request.contextPath}/userAction!getTname.action',
+				success : function(r) {
+					var data = jQuery.parseJSON(r);
+					$('#admin_kcgl_addForm_tname').combobox('loadData', data);
+				}
+		});
+		
 		$('#admin_kcgl_addDialog').dialog('open');
+		
 	}
 	
 	function remove(){
@@ -236,7 +246,10 @@
 		</tr>
 		<tr>
 			<th>课程教师</th>
-			<td><input name="tname" class="easyui-validatebox" data-options="required:true"/>
+			<td>
+				<select class="easyui-combobox" name="tname" id="admin_kcgl_addForm_tname" 
+						data-options="valueField:'kcgl_id', textField:'kegl_text', panelHeight:'auto',editable:false">
+				</select>
 			</td>
 		</tr>
 	</table>

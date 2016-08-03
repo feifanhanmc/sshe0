@@ -1,11 +1,14 @@
 package sy.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,7 @@ import sy.model.Muser;
 import sy.pageModel.CourseStu;
 import sy.pageModel.DataGrid;
 import sy.service.CourseStuServiceI;
+import sy.util.Encrypt;
 
 
 @Service("courseStuService")
@@ -126,6 +130,7 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 				McourseStu m = (McourseStu) l.get(i);
 				CourseStu c = new CourseStu();
 
+				c.setCsid(m.getCsid());
 				c.setSid(m.getSid());
 				c.setGrade(m.getGrade());
 				c.setRank(m.getRank());
@@ -159,4 +164,48 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		return hql;
 	}
 
+	@Override
+	public CourseStu edit(CourseStu courseStu)
+	{
+		McourseStu m = courseStuDao.get(McourseStu.class, courseStu.getCsid());
+		m.setGrade(courseStu.getGrade());
+		return courseStu;
+	}
+
+	@Override
+	public List exportExcel()
+	{
+		//这里要限制只能打印此教师的课程学生信息
+		List<McourseStu> l = courseStuDao.find("from McourseStu m");
+		return l;
+	}
+
+	@Override
+	public String getCname(String cid)
+	{
+		return courseDao.get("from Mcourse cm where cm.cid = '" + cid+ "'").getCname().toString();
+	}
+
+	@Override
+	public String getSname(String sid)
+	{
+		return userDao.get("from Muser m where m.id = '" + sid+ "'").getName().toString();
+	}
+
+	@Override
+	public void updateMcourseStuForm(String cid)
+	{
+		List<Muser> muser = userDao.find("from Muser m where m.role = 'student'");
+		for(Muser m : muser)
+		{
+			McourseStu mstu = new McourseStu();
+			mstu.setCid(cid);
+			mstu.setGrade(0);
+			mstu.setRank(0);
+			mstu.setSid(m.getId());
+			mstu.setCsid(UUID.randomUUID().toString());
+			
+			courseStuDao.save(mstu);
+		}		
+	}
 }

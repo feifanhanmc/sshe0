@@ -57,16 +57,9 @@ public class CourseServiceImpl implements CourseServiceI
 		Mcourse m = new Mcourse();
 		BeanUtils.copyProperties(course, m);
 		
-		logger.info(course.getTname());
-		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("name",course.getTname());
 		String tid = (userDao.get("from Muser m where m.name = :name",params)).getId();
-
-		
-//		String tid = (courseDao.get("from Muser m where m.name = " + course.getTname())).getTid();
-		logger.info(tid);
-		logger.info(course.getTname());
 		m.setTid(tid);
 		m.setCid(UUID.randomUUID().toString());
 		m.setAvg(0);

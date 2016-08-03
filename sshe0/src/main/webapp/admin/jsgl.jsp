@@ -269,7 +269,7 @@
 		<tr>
 			<th>角色</th>
 			<td>
-				<select class="easyui-combobox" name="role"  editable="false" style="width:143px;">
+				<select class="easyui-combobox" name="role" panelHeight="auto" editable="false" style="width:143px; ">
     				<option value="student">student</option>
     				<option value="teacher">teacher</option>
     				<option value="admin">admin</option>

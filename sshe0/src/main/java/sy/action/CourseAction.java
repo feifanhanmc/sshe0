@@ -28,6 +28,7 @@ import sy.pageModel.Course;
 import sy.pageModel.Json;
 import sy.pageModel.User;
 import sy.service.CourseServiceI;
+import sy.service.CourseStuServiceI;
 
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -50,7 +51,9 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 	
 	private CourseServiceI courseService;
 	
-	
+	private CourseStuServiceI courseStuService;
+
+
 	public CourseServiceI getCourseService()
 	{
 		return courseService;
@@ -62,6 +65,19 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 		this.courseService = courseService;
 	}
 
+	public CourseStuServiceI getCourseStuService()
+	{
+		return courseStuService;
+	}
+
+	@Autowired
+	public void setCourseStuService(CourseStuServiceI courseStuService)
+	{
+		this.courseStuService = courseStuService;
+	}
+	
+	
+	
 	public void add()
 	{
 		Json j = new Json();
@@ -71,6 +87,10 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 			j.setSuccess(true);
 			j.setMsg("添加成功!");
 			j.setObj(c);
+			
+			//调用方法，完成McourseStu表的更新
+			courseStuService.updateMcourseStuForm(c.getCid());
+			
 		} catch (Exception e)
 		{
 			j.setMsg(e.getMessage());
@@ -109,8 +129,7 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 	public void exportExcel()
 	{	
 		HttpServletResponse response = ServletActionContext.getResponse();
-		HttpServletRequest request = ServletActionContext.getRequest();
-		
+	
 		String docsPath = "D:";
 		String fileName = "CourseInfo" + System.currentTimeMillis() + ".xlsx";	
 		String filePath = docsPath + FILE_SEPARATOR + fileName;
@@ -144,34 +163,6 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 			e.printStackTrace();
 		}
 		
-		download(filePath, response);
-	}
-	
-
-	private void download(String path, HttpServletResponse response)
-	{
-		try 
-		{
-			File file = new File(path);
-			String filename = file.getName();
-
-			InputStream fis = new BufferedInputStream(new FileInputStream(path));
-			byte[] buffer = new byte[fis.available()];
-			fis.read(buffer);
-			fis.close();
-			response.reset();
-			response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
-			response.addHeader("Content-Length", "" + file.length());
-			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-			
-			response.setContentType("application/vnd.ms-excel;charset=gb2312");
-			toClient.write(buffer);
-			toClient.flush();
-			toClient.close();
-		} 
-		catch (IOException ex) 
-		{
-			ex.printStackTrace();
-		}
+		super.download(filePath, response);
 	}
 }

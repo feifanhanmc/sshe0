@@ -5,6 +5,8 @@ import java.util.List;
 import sy.pageModel.DataGrid;
 import sy.pageModel.User;
 
+import com.alibaba.fastjson.JSONArray;
+
 public interface UserServiceI
 {	
 	public User save(User user);
@@ -18,4 +20,6 @@ public interface UserServiceI
 	public User edit(User user);
 	
 	public List exportExcel();
+	
+	public JSONArray getTname();
 }

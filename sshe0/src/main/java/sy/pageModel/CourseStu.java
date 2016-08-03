@@ -4,10 +4,11 @@ import java.math.BigDecimal;
 
 public class CourseStu
 {
+	private String csid;
 	private String cid;
 	private String sid;
-	private String grade;
-	private BigDecimal rank;
+	private float grade;
+	private int rank;
 	
 	private int page;
 	private int rows;
@@ -19,7 +20,24 @@ public class CourseStu
 	
 	private String cname;
 	
+	private String sdata;
 	
+	public String getSdata()
+	{
+		return sdata;
+	}
+	public void setSdata(String sdata)
+	{
+		this.sdata = sdata;
+	}
+	public String getCsid()
+	{
+		return csid;
+	}
+	public void setCsid(String csid)
+	{
+		this.csid = csid;
+	}
 	public String getCname()
 	{
 		return cname;
@@ -84,21 +102,21 @@ public class CourseStu
 	{
 		this.sid = sid;
 	}
-	public String getGrade()
+	public float getGrade()
 	{
 		return grade;
 	}
-	public void setGrade(String grade)
+	public void setGrade(float grade)
 	{
 		this.grade = grade;
 	}
-	public BigDecimal getRank()
+	public int getRank()
 	{
 		return rank;
 	}
-	public void setRank(BigDecimal rank)
+	public void setRank(int i)
 	{
-		this.rank = rank;
+		this.rank = i;
 	}
 	
 	
