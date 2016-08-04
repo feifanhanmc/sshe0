@@ -3,7 +3,7 @@
 	$(function(){
 		var datagrid;
 		var editRow = undefined;
-		datagrid = $('#admin_cjlr_datagrid').datagrid({
+		datagrid = $('#admin_cjcx_datagrid').datagrid({
 			url : '${pageContext.request.contextPath}/courseStuAction!datagrid.action',
 			fit : true,
 			fitColumns : true,
@@ -13,7 +13,7 @@
 			pageSize : 10 ,
 			pageList : [10, 20, 30, 40, 50],
 			rownumbers : true,
-			sortName : 'grade',
+			sortName : 'name',
 			sortOrder : 'asc',
 			pagePosition : 'bottom',
 			checkOnSelect : false ,
@@ -28,7 +28,7 @@
 				field : 'sname',
 				title : '学生姓名',
 				width : 80,
-				sortable : false				
+				sortable : true				
 			}]],
 			columns : [ [ {
 				field : 'grade',
@@ -108,9 +108,9 @@
 						},
 						dataType : 'json',
 						success : function(r) {
-							//$('#admin_cjlr_datagrid').datagrid('reload');
-							$('#admin_cjlr_datagrid').datagrid('load');						
-							$('#admin_cjlr_datagrid').datagrid('unselectAll');
+							//$('#admin_cjcx_datagrid').datagrid('reload');
+							$('#admin_cjcx_datagrid').datagrid('load');						
+							$('#admin_cjcx_datagrid').datagrid('unselectAll');
 							$.messager.show({
 								title : '提示',
 								msg : r.msg
@@ -142,27 +142,27 @@
 	}		
 
 	function editFun(){
-		var rows = $('#admin_cjlr_datagrid').datagrid('getChecked');
+		var rows = $('#admin_cjcx_datagrid').datagrid('getChecked');
 		if(rows.length == 1){
 			var d = $('<div/>').dialog({
 				width : 220,
 				height : 200,
-				href : '${pageContext.request.contextPath}/admin/cjlrEdit.jsp',
+				href : '${pageContext.request.contextPath}/admin/cjcxEdit.jsp',
 				modal : true,
 				title : '编辑用户',
 				buttons : [{
 					text:'确定',
 					iconCls : 'icon-ok',
 					handler: function(){
-						$('#admin_cjlrEdit_editForm').form('submit',{
+						$('#admin_cjcxEdit_editForm').form('submit',{
 							url : '${pageContext.request.contextPath}/userAction!edit.action',
 							success : function(r) {
 								var o = jQuery.parseJSON(r);
 								if (o.success) {
 									d.dialog('close');
-									//$('#admin_cjlr_datagrid').datagrid('reload');
-									$('#admin_cjlr_datagrid').datagrid('updateRow',{
-										index : $('#admin_cjlr_datagrid').datagrid('getRowIndex',rows[0].id),
+									//$('#admin_cjcx_datagrid').datagrid('reload');
+									$('#admin_cjcx_datagrid').datagrid('updateRow',{
+										index : $('#admin_cjcx_datagrid').datagrid('getRowIndex',rows[0].id),
 										row : o.obj
 									});
 								}
@@ -178,10 +178,10 @@
 					$(this).dialog('destroy');
 				},
 				onLoad : function(){
-					//$('#admin_cjlrEdit_editForm input[name=id]').val(rows[0].id);
-					//$('#admin_cjlrEdit_editForm input[name=name]').val(rows[0].name);
-					$('#admin_cjlrEdit_editForm').form('load', rows[0]);
-					$('#admin_cjlrEdit_editForm input[name=pwd]').val(''); 
+					//$('#admin_cjcxEdit_editForm input[name=id]').val(rows[0].id);
+					//$('#admin_cjcxEdit_editForm input[name=name]').val(rows[0].name);
+					$('#admin_cjcxEdit_editForm').form('load', rows[0]);
+					$('#admin_cjcxEdit_editForm input[name=pwd]').val(''); 
 				}
 			});
 		}else{
@@ -200,30 +200,27 @@
 	}
 	
 	function searchFun(){
-		$('#admin_cjlr_datagrid').datagrid('load',serializeObject($('#admin_cjlr_searchForm')));
+		$('#admin_cjcx_datagrid').datagrid('load',serializeObject($('#admin_cjcx_searchForm')));
 	}
 	
 	function clearFun(){
-		$('#admin_cjlr_layout input[name=name]').val('');
-		$('#admin_cjlr_datagrid').datagrid('load',{});
+		$('#admin_cjcx_layout input[name=name]').val('');
+		$('#admin_cjcx_datagrid').datagrid('load',{});
 	}
 
 </script>
 
-<div id = "admin_cjlr_layout" class="easyui-layout" data-options="fit:true,border:false">
-	<!-- 
-	功能没有正确实现，也懒得写了，其他地方有类似的功能。也就是粘贴复制而已了。
+<div id = "admin_cjcx_layout" class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
-		<form id="admin_cjlr_searchForm">
-			查询姓名 :<input type="text" name="name" class="easyui-validatebox" />
+		<form id="admin_cjcx_searchForm">
+			查询条件:<input type="text" name="name" class="easyui-validatebox" />
     		<input style="display:none" />
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
 	</div>
-	 -->
 	<div data-options="region:'center'">
-		<table id="admin_cjlr_datagrid"></table>
+		<table id="admin_cjcx_datagrid"></table>
 	</div>
 </div>
 <form id="excelForm" method="post">

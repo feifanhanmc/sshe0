@@ -11,7 +11,7 @@ public interface CourseStuServiceI
 	
 	public CourseStu edit(CourseStu courseStu);
 	
-	public List exportExcel();
+	public List exportExcel(String tid);
 	
 	public String getCname(String cid);
 

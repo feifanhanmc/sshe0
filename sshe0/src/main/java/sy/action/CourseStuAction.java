@@ -82,7 +82,7 @@ public class CourseStuAction extends BaseAction implements ModelDriven<CourseStu
 		String fileName = "CourseStuInfo" + System.currentTimeMillis() + ".xlsx";	
 		String filePath = docsPath + FILE_SEPARATOR + fileName;
 
-		List<McourseStu> l = courseStuService.exportExcel();
+		List<McourseStu> l = courseStuService.exportExcel(super.finalId);
 		String[] str = {"学生姓名","分数","排名","课程名"};
 		try 
 		{

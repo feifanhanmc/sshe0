@@ -88,8 +88,8 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		String totalHql = "select count(*) " + uhql;
 		dg.setTotal(userDao.count(totalHql, params));
 //		执行student查询
-//		List<Muser> ul = userDao.find(uhql, params, courseStu.getPage(), courseStu.getRows());
-		List<Muser> ul = userDao.find(uhql);
+		List<Muser> ul = userDao.find(uhql, params, courseStu.getPage(), courseStu.getRows());
+//		List<Muser> ul = userDao.find(uhql);
 
 		
 //		查询此老师tId对应的cId和cName
@@ -101,8 +101,8 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		
 //		课程查询
 		String chql = "from McourseStu cm where cm.cid = '" + cId+ "'";
-//		chql = addWhere(courseStu, chql, params);
-//		chql = addOrder(courseStu, chql);
+		chql = addWhere(courseStu, chql, params);
+		chql = addOrder(courseStu, chql);
 //		List<McourseStu> l = courseStuDao.find(chql, params, courseStu.getPage(), courseStu.getRows());
 		List<McourseStu> l = courseStuDao.find(chql);
 		
@@ -111,7 +111,6 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 		List<CourseStu> nl = new ArrayList<CourseStu>();
 	
 		changeModel(l, nl, ul, cName);
-		
 		
 		dg.setTotal(userDao.count(totalHql, params));
 		dg.setRows(nl);
@@ -155,7 +154,8 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	{
 		if (courseStu.getSname() != null && !courseStu.getSname().trim().equals("")) 
 		{
-			hql += " where m.name like :name";
+//			hql += " where m.name like :name";
+			hql += " and m.name like :name";
 			params.put("name", "%%" + courseStu.getSname().trim() + "%%");
 		}
 		return hql;
@@ -179,10 +179,12 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	}
 
 	@Override
-	public List exportExcel()
+	public List exportExcel(String tid)
 	{
+		String cid = courseDao.get("from Mcourse m where m.tid = '" + tid + "'").getCid();
+		
 		//这里要限制只能打印此教师的课程学生信息
-		List<McourseStu> l = courseStuDao.find("from McourseStu m");
+		List<McourseStu> l = courseStuDao.find("from McourseStu m where m.cid = '" + cid + "'");
 		return l;
 	}
 
