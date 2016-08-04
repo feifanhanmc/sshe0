@@ -19,4 +19,6 @@ public interface CourseStuServiceI
 	
 	public void updateMcourseStuForm(String cid);
 	
+	public int updateMcourseStuGrade(float oldGrade, float grade, String cid, String csid);
+	
 }

@@ -1,14 +1,12 @@
 package sy.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ import sy.model.Muser;
 import sy.pageModel.CourseStu;
 import sy.pageModel.DataGrid;
 import sy.service.CourseStuServiceI;
-import sy.util.Encrypt;
 
 
 @Service("courseStuService")
@@ -168,7 +165,16 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	public CourseStu edit(CourseStu courseStu)
 	{
 		McourseStu m = courseStuDao.get(McourseStu.class, courseStu.getCsid());
-		m.setGrade(courseStu.getGrade());
+		float grade = courseStu.getGrade();
+		
+		//如果分数确实有修改，则自动更新成绩单
+		int rankChange = 0;
+		float oldGrade = courseStuDao.get("from McourseStu m where m.csid = '" + courseStu.getCsid() + "'").getGrade();
+		if(oldGrade != grade)
+			rankChange = updateMcourseStuGrade(oldGrade, grade, m.getCid(), m.getCsid());
+		
+		m.setGrade(grade);
+		m.setRank(m.getRank() + rankChange);
 		return courseStu;
 	}
 
@@ -208,4 +214,45 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 			courseStuDao.save(mstu);
 		}		
 	}
+
+	@Override
+	public int updateMcourseStuGrade(float oldGrade, float grade, String cid, String csid)
+	{
+		
+		float avg = 0;
+		float total = 0;
+		int sum = 0;
+		int rankChange = 0;
+		
+		List<McourseStu> mstu = courseStuDao.find("from McourseStu m where m.cid = '" + cid + "'");
+		for(McourseStu m : mstu)
+		{
+			total += m.getGrade();
+			sum++;
+			//更新Rank
+			if(oldGrade < m.getGrade() && m.getGrade() < grade)
+			{
+				m.setRank(m.getRank() + 1);
+				rankChange--;
+			}
+			else if(oldGrade > m.getGrade() && m.getGrade() > grade)
+			{
+				m.setRank(m.getRank() - 1);
+				rankChange++;
+			}
+		}
+
+
+		
+		//更新Mcourse Avg
+		total = total - oldGrade + grade;
+		sum = mstu.size();
+		avg = total/sum;
+		courseDao.get("from Mcourse m where m.cid = '" + cid + "'").setAvg(avg);
+		
+		return rankChange;
+	}
+
+	
+	
 }

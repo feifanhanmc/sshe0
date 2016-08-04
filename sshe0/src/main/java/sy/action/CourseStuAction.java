@@ -67,6 +67,9 @@ public class CourseStuAction extends BaseAction implements ModelDriven<CourseStu
 		j.setMsg("修改成功！");
 		j.setObj(cs);
 		
+		//调用方法，完成McourseStu表的更新
+//		courseStuService.updateMcourseStuForm(c.getCid());
+		
 		super.writeJson(j);
 	}
 	
