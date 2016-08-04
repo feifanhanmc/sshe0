@@ -165,7 +165,9 @@ public class UserServiceImpl implements UserServiceI
 	{
 		Muser m = userDao.get(Muser.class, user.getId());
 		BeanUtils.copyProperties(user, m, new String[]{"id", "pwd"});
-		m.setPwd(Encrypt.e(user.getPwd()));
+		String pwd = user.getPwd();
+		if(!pwd.equals("") && pwd != null)
+			m.setPwd(Encrypt.e(pwd));
 		m.setModifytime(new Date());
 		return user;
 	}

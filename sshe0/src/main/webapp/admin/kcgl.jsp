@@ -34,7 +34,7 @@
 				width : 80,
 				sortable : true
 			},{
-				field : 'avg',
+				field : 'average',
 				title : '平均分',
 				width : 50,
 				sortable : true											
@@ -64,6 +64,12 @@
 					exportExcel();
 				}
 			},'-']
+		});
+		
+		$('#admin_kcgl_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
+			if (event.keyCode == '13') {
+				searchFun();
+			}
 		});
 	});
 	
@@ -197,7 +203,8 @@
 <div id = "admin_kcgl_layout" class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
 		<form id="admin_kcgl_searchForm">
-			查询条件:<input name="name"/>
+			查询条件:<input type="text" name="cname" class="easyui-validatebox" />
+    		<input style="display:none" />
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>

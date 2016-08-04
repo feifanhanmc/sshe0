@@ -62,7 +62,7 @@ public class CourseServiceImpl implements CourseServiceI
 		String tid = (userDao.get("from Muser m where m.name = :name",params)).getId();
 		m.setTid(tid);
 		m.setCid(UUID.randomUUID().toString());
-		m.setAvg(0);
+		m.setAverage(0);
 		courseDao.save(m);
 		BeanUtils.copyProperties(m, course);
 		return course;
@@ -76,7 +76,9 @@ public class CourseServiceImpl implements CourseServiceI
 		Map<String, Object> params = new HashMap<String, Object>();
 		hql = addWhere(course, hql, params);		
 		String totalHql = "select count(*) " + hql;
+		
 		hql = addOrder(course, hql);
+		
 		List<Mcourse> l = courseDao.find(hql, params, course.getPage(), course.getRows());
 		List<Course> nl = new ArrayList<Course>();
 		changeModel(l, nl);
@@ -104,7 +106,7 @@ public class CourseServiceImpl implements CourseServiceI
 		if (course.getSort() != null) 
 		{
 			hql += " order by " + course.getSort() + " " + course.getOrder();
-		}
+		} 
 		return hql;
 	}
 
@@ -147,7 +149,7 @@ public class CourseServiceImpl implements CourseServiceI
 	public Course edit(Course course)
 	{
 		Mcourse m = courseDao.get(Mcourse.class, course.getCid());
-		BeanUtils.copyProperties(course, m, new String[]{"avg"});
+		BeanUtils.copyProperties(course, m, new String[]{"average"});
 		return course;
 	}
 }

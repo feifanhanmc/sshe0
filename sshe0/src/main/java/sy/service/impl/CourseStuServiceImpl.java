@@ -219,7 +219,7 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 	public int updateMcourseStuGrade(float oldGrade, float grade, String cid, String csid)
 	{
 		
-		float avg = 0;
+		float average = 0;
 		float total = 0;
 		int sum = 0;
 		int rankChange = 0;
@@ -244,11 +244,11 @@ public class CourseStuServiceImpl implements CourseStuServiceI
 
 
 		
-		//更新Mcourse Avg
+		//更新Mcourse Average
 		total = total - oldGrade + grade;
 		sum = mstu.size();
-		avg = total/sum;
-		courseDao.get("from Mcourse m where m.cid = '" + cid + "'").setAvg(avg);
+		average = total/sum;
+		courseDao.get("from Mcourse m where m.cid = '" + cid + "'").setAverage(average);
 		
 		return rankChange;
 	}

@@ -153,7 +153,7 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>
 
 				row.createCell(0).setCellValue(m.getCname());
 				row.createCell(1).setCellValue(m.getTname());
-				row.createCell(2).setCellValue(m.getAvg());
+				row.createCell(2).setCellValue(m.getAverage());
 
 			}
 

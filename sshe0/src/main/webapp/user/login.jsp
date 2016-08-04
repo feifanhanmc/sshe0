@@ -25,6 +25,7 @@
 			$('#user_login_loginForm input[name=name]').focus();
 		}, 0);
 	});
+	
 </script>
     <div id="user_login_loginDialog" class="easyui-dialog" data-options="title:'登录',modal:true,closable:false,buttons:[{
 				text:'登录',
@@ -37,7 +38,7 @@
 		<table>
 			<tr>
 				<th>登录名</th>
-				<td><input name="account" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'" />
+				<td><input name="account" class="easyui-validatebox" data-options="required:true,missingMessage:'登陆名称必填'"  />
 				</td>
 			</tr>
 			<tr>

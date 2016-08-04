@@ -18,7 +18,7 @@ public class Mcourse implements java.io.Serializable
 	private String cid;
 	private String cname;
 	private String tid;
-	private float avg;
+	private float average;
 	private String tname;
 	// Constructors
 
@@ -34,12 +34,12 @@ public class Mcourse implements java.io.Serializable
 	}
 
 	/** full constructor */
-	public Mcourse(String cid, String cname, String tid, float avg)
+	public Mcourse(String cid, String cname, String tid, float average)
 	{
 		this.cid = cid;
 		this.cname = cname;
 		this.tid = tid;
-		this.avg = avg;
+		this.average = average;
 	}
 
 	// Property accessors
@@ -75,14 +75,14 @@ public class Mcourse implements java.io.Serializable
 		this.tid = tid;
 	}
 
-	public float getAvg()
+	public float getAverage()
 	{
-		return this.avg;
+		return this.average;
 	}
 
-	public void setAvg(float avg)
+	public void setAverage(float average)
 	{
-		this.avg = avg;
+		this.average = average;
 	}
 
 	public String getTname()

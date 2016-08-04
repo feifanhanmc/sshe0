@@ -79,6 +79,12 @@
 				}
 			},'-']
 		});
+		
+		$('#admin_yhgl_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
+			if (event.keyCode == '13') {
+				searchFun();
+			}
+		});
 	});
 	
 	
@@ -196,22 +202,15 @@
 		}
 	}
 
-//	$(function() {
-//		$('#admin_yhgl_searchForm input').bind('keyup', function(event) {/* 增加回车提交功能 */
-//			if (event.keyCode == '13') {
-//				$('#admin_yhgl_datagrid').datagrid('load',serializeObject($('#admin_yhgl_searchForm')));
-//			}
-//		});
-//	});
-
 </script>
 
 <div id = "admin_yhgl_layout" class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
-		<form id="admin_yhgl_searchForm">
-			查询条件:<input name="name"/>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
+		<form id="admin_yhgl_searchForm" method="post">
+			查询条件:<input type="text" name="name" class="easyui-validatebox" />
+    		<input style="display:none" />   
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
 	</div>
 	<div data-options="region:'center'">

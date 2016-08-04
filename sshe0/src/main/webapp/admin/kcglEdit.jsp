@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<th>平均分</th>
-			<td><input name="avg"  class="easyui-validatebox" readonly="readonly"/>
+			<td><input name="average"  class="easyui-validatebox" readonly="readonly"/>
 			</td>
 		</tr>
 	</table>

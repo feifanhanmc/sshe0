@@ -9,7 +9,7 @@ public class Course implements java.io.Serializable
 	private String cid;
 	private String cname;
 	private String tid;
-	private float avg;
+	private float average;
 	
 	
 	private int page;
@@ -99,13 +99,13 @@ public class Course implements java.io.Serializable
 	{
 		this.tid = tid;
 	}
-	public float getAvg()
+	public float getAverage()
 	{
-		return avg;
+		return average;
 	}
-	public void setAvg(float avg)
+	public void setAverage(float average)
 	{
-		this.avg = avg;
+		this.average = average;
 	}
 	
 	

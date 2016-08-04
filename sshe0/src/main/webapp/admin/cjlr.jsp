@@ -118,16 +118,18 @@
 						}
 					});
             },
-           	onDblClickRow: function (rowIndex, rowData) {
+           	//onDblClickRow: function (rowIndex, rowData) {
                 //双击开启编辑行
-                    if (editRow != undefined) {
-                        datagrid.datagrid("endEdit", editRow);
-                    }
-                    if (editRow == undefined) {
-                        datagrid.datagrid("beginEdit", rowIndex);
-                        editRow = rowIndex;
-                    }
-            }
+                   // if (editRow != undefined) {
+                        //datagrid.datagrid("endEdit", editRow);
+                        //datagrid.datagrid("beginEdit", rowIndex);
+                        //editRow = rowIndex;
+                   // }
+                   //if (editRow == undefined) {
+                       // datagrid.datagrid("beginEdit", rowIndex);
+                       // editRow = rowIndex;
+                    //}
+           // }
 		});
 	});
 	
@@ -211,7 +213,8 @@
 <div id = "admin_cjlr_layout" class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',title:'查询',border:false" style="height:60px;">
 		<form id="admin_cjlr_searchForm">
-			查询条件:<input name="name"/>
+			查询条件:<input type="text" name="name" class="easyui-validatebox" />
+    		<input style="display:none" />
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearFun();">清空</a>	
 		</form>
@@ -220,6 +223,5 @@
 		<table id="admin_cjlr_datagrid"></table>
 	</div>
 </div>
-
 <form id="excelForm" method="post">
 </form>
