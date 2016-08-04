@@ -59,6 +59,7 @@ public class CourseStuAction extends BaseAction implements ModelDriven<CourseStu
 		super.writeJson(courseStuService.datagrid(courseStu, tId));
 	}
 	
+	
 	public void edit()
 	{
 		CourseStu cs = courseStuService.edit(courseStu);
